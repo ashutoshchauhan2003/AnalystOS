@@ -11,7 +11,7 @@ export function CinematicHero() {
     <section className="relative overflow-hidden pb-20 pt-16 lg:pb-28 lg:pt-24">
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.16),transparent_30%),radial-gradient(circle_at_75%_20%,rgba(99,102,241,0.18),transparent_24%),linear-gradient(180deg,#08111f_0%,#060b16_48%,#04070f_100%)]" />
       <div className="absolute inset-x-0 top-12 -z-10 h-[680px] bg-[linear-gradient(to_right,rgba(148,163,184,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.08)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(circle_at_center,black,transparent_88%)] opacity-45" />
-      <div className="absolute left-[10%] top-10 -z-10 h-48 w-48 rounded-full border border-cyan-300/12 bg-cyan-300/6 blur-3xl" />
+      <div className="absolute left-[10%] top-10 -z-10 h-48 w-48 rounded-full border border-cyan-300/[0.12] bg-cyan-300/[0.06] blur-3xl" />
       <div className="absolute right-[6%] top-28 -z-10 h-64 w-64 rounded-full bg-indigo-400/10 blur-[110px]" />
 
       <Container className="grid items-center gap-14 lg:grid-cols-[1.04fr_0.96fr]">
@@ -32,7 +32,7 @@ export function CinematicHero() {
             <span className="mt-3 block text-slate-300">Learn, practice, publish, get hired.</span>
           </h1>
 
-          <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-300/76 xl:max-w-3xl">
+          <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-300/[0.76] xl:max-w-3xl">
             A cinematic analyst platform built around real workflow simulation, portfolio-grade
             projects, and a premium talent signal for modern hiring teams.
           </p>
@@ -52,7 +52,7 @@ export function CinematicHero() {
                 glow={index % 2 === 0 ? "cyan" : "blue"}
               >
                 <p className="text-3xl font-semibold tracking-[-0.03em] text-white">{metric.value}</p>
-                <p className="mt-2 text-sm leading-6 text-slate-300/72">{metric.label}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-300/[0.72]">{metric.label}</p>
               </GlassPanel>
             ))}
           </div>
@@ -66,22 +66,22 @@ export function CinematicHero() {
         >
           <div className="relative mx-auto max-w-[680px]">
             <motion.div
-              className="absolute -left-8 top-12 h-36 w-36 rounded-[2rem] border border-cyan-300/12 bg-cyan-300/6 backdrop-blur-sm"
+              className="absolute -left-8 top-12 h-36 w-36 rounded-[2rem] border border-cyan-300/[0.12] bg-cyan-300/[0.06] backdrop-blur-sm"
               animate={{ y: [0, -10, 0], rotate: [-6, -2, -6] }}
               transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
-              className="absolute -right-10 bottom-12 h-44 w-44 rounded-full border border-white/8 bg-indigo-300/5"
+              className="absolute -right-10 bottom-12 h-44 w-44 rounded-full border border-white/[0.08] bg-indigo-300/5"
               animate={{ y: [0, 12, 0], scale: [1, 1.04, 1] }}
               transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
             />
             <div className="absolute -inset-10 rounded-[44px] bg-cyan-400/10 blur-3xl" />
-            <div className="absolute left-10 top-10 h-[82%] w-[88%] rounded-[42px] border border-white/6 bg-white/[0.03] shadow-[0_40px_90px_rgba(2,6,23,0.26)]" />
+            <div className="absolute left-10 top-10 h-[82%] w-[88%] rounded-[42px] border border-white/[0.06] bg-white/[0.03] shadow-[0_40px_90px_rgba(2,6,23,0.26)]" />
 
             <GlassPanel className="relative min-h-[640px] border-cyan-300/20 p-6 lg:p-7">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(103,232,249,0.16),transparent_24%),linear-gradient(180deg,rgba(8,15,28,0.72),rgba(5,8,18,0.96))]" />
               <div className="absolute inset-6 rounded-[28px] border border-white/10" />
-              <div className="absolute left-[8%] top-[10%] h-[72%] w-[72%] rounded-[30px] border border-cyan-300/8 opacity-50" />
+              <div className="absolute left-[8%] top-[10%] h-[72%] w-[72%] rounded-[30px] border border-cyan-300/[0.08] opacity-50" />
               <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(34,211,238,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(34,211,238,0.08)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(circle_at_center,black,transparent_90%)] opacity-60" />
               <motion.div
                 className="absolute inset-x-12 top-20 h-px bg-gradient-to-r from-transparent via-cyan-200/70 to-transparent"
@@ -92,7 +92,7 @@ export function CinematicHero() {
               <div className="relative flex h-full flex-col justify-between">
                 <div className="grid grid-cols-[1.18fr_0.82fr] gap-4">
                   <GlassPanel className="p-4" glow="blue">
-                    <p className="text-[11px] uppercase tracking-[0.26em] text-cyan-200/72">
+                    <p className="text-[11px] uppercase tracking-[0.26em] text-cyan-200/[0.72]">
                       Workflow signal
                     </p>
                     <div className="mt-5 flex items-end justify-between">
@@ -108,7 +108,7 @@ export function CinematicHero() {
                   </GlassPanel>
 
                   <GlassPanel className="p-4" glow="cyan">
-                    <p className="text-[11px] uppercase tracking-[0.26em] text-cyan-200/72">
+                    <p className="text-[11px] uppercase tracking-[0.26em] text-cyan-200/[0.72]">
                       Portfolio output
                     </p>
                     <p className="mt-8 text-3xl font-semibold tracking-[-0.04em] text-white">
@@ -141,7 +141,7 @@ export function CinematicHero() {
                         {["Learn", "Practice", "Publish", "Get Hired"].map((item, index) => (
                           <div
                             key={item}
-                            className="flex items-center justify-between rounded-2xl border border-white/8 bg-white/[0.03] px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                            className="flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.03] px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                           >
                             <span className="text-sm text-slate-200">{item}</span>
                             <span className="text-xs text-cyan-200/75">0{index + 1}</span>
@@ -175,7 +175,7 @@ export function CinematicHero() {
                           {[34, 48, 62, 56, 76, 92].map((height) => (
                             <motion.span
                               key={height}
-                              className="w-full rounded-t-full bg-gradient-to-t from-cyan-500/15 to-cyan-300/80"
+                              className="w-full rounded-t-full bg-gradient-to-t from-cyan-500/[0.15] to-cyan-300/80"
                               initial={{ height: 0, opacity: 0.2 }}
                               animate={{ height, opacity: [0.72, 1, 0.78] }}
                               transition={{

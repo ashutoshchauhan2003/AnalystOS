@@ -3,6 +3,8 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { PageTransition } from "@/components/motion/page-transition";
+import { premiumEase } from "@/components/motion/presets";
 import { labStations, type LabStationId } from "@/content/learner-lab";
 import { LabHud } from "@/components/learner-lab/lab-hud";
 import { LabShell } from "@/components/learner-lab/lab-shell";
@@ -70,27 +72,29 @@ export function AnalystLabExperience() {
 
   return (
     <LabShell>
-      <div className="absolute inset-0">
-        <AnalystLabCanvas
-          activeStationId={activeStationId}
-          onSelectStation={handleSelectStation}
-          qualityMode={qualityMode}
-        />
-      </div>
+      <PageTransition className="absolute inset-0">
+        <div className="absolute inset-0">
+          <AnalystLabCanvas
+            activeStationId={activeStationId}
+            onSelectStation={handleSelectStation}
+            qualityMode={qualityMode}
+          />
+        </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute inset-0 z-10"
-      >
-        <LabHud
-          activeStationId={activeStationId}
-          onSelectStation={handleSelectStation}
-          qualityMode={qualityMode}
-          onQualityModeChange={handleQualityModeChange}
-        />
-      </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.9, ease: premiumEase }}
+          className="absolute inset-0 z-10"
+        >
+          <LabHud
+            activeStationId={activeStationId}
+            onSelectStation={handleSelectStation}
+            qualityMode={qualityMode}
+            onQualityModeChange={handleQualityModeChange}
+          />
+        </motion.div>
+      </PageTransition>
     </LabShell>
   );
 }

@@ -13,22 +13,22 @@ export function RecommendedNextStepPanel() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,0.1),transparent_24%)]" />
         <div className="relative">
           <div className="mb-6 h-px w-20 bg-gradient-to-r from-cyan-300/70 to-transparent" />
-          <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/72">
+          <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">
             {recommendedNextStep.eyebrow}
           </p>
           <h2 className="mt-5 text-2xl font-semibold leading-[1.12] tracking-[-0.03em] text-white">
             {recommendedNextStep.title}
           </h2>
-          <p className="mt-5 text-base leading-8 text-slate-300/76">
+          <p className="mt-5 text-base leading-8 text-slate-300/[0.76]">
             {recommendedNextStep.description}
           </p>
 
           <div className="mt-7 grid gap-3">
-            <div className="rounded-[1.2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+            <div className="rounded-[1.2rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
               <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500">Effort</p>
               <p className="mt-2 text-base text-white">{recommendedNextStep.effort}</p>
             </div>
-            <div className="rounded-[1.2rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+            <div className="rounded-[1.2rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
               <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500">Impact</p>
               <p className="mt-2 text-base text-white">{recommendedNextStep.impact}</p>
             </div>

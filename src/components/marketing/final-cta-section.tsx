@@ -15,13 +15,13 @@ export function FinalCtaSection() {
             <div className="relative flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
               <div className="max-w-3xl">
                 <div className="mb-6 h-px w-20 bg-gradient-to-r from-cyan-300/70 to-transparent" />
-                <p className="text-[11px] uppercase tracking-[0.36em] text-cyan-200/72">
+                <p className="text-[11px] uppercase tracking-[0.36em] text-cyan-200/[0.72]">
                   Final Call To Action
                 </p>
                 <h2 className="mt-5 text-4xl font-semibold leading-[1.04] tracking-[-0.04em] text-white lg:text-5xl">
                   Build analyst proof that looks premium before anyone opens your resume.
                 </h2>
-                <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300/76">
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300/[0.76]">
                   Enter a platform designed to teach judgment, simulate execution, and present your
                   strongest work with the clarity recruiters actually need.
                 </p>

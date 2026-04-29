@@ -16,13 +16,13 @@ export function DashboardOverview() {
         <div className="relative grid gap-8 xl:grid-cols-[1.1fr_0.9fr]">
           <div>
             <div className="mb-6 h-px w-20 bg-gradient-to-r from-cyan-300/70 to-transparent" />
-            <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/72">
+            <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">
               Welcome Back
             </p>
             <h1 className="mt-5 max-w-[12ch] text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-white lg:text-[3.4rem]">
               Your analyst workspace is live.
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300/76">
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300/[0.76]">
               Keep moving through structured labs, sharpen your portfolio signal, and turn today&apos;s
               work into visible progress recruiters can trust.
             </p>
@@ -39,7 +39,7 @@ export function DashboardOverview() {
             {overviewHighlights.map((highlight, index) => (
               <div
                 key={highlight}
-                className="flex items-center justify-between rounded-[1.4rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                className="flex items-center justify-between rounded-[1.4rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
               >
                 <div className="flex items-center gap-3">
                   <span className="text-[10px] uppercase tracking-[0.32em] text-slate-500">

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GlowButton } from "@/components/shared/glow-button";
+import { premiumEase } from "@/components/motion/presets";
 import {
   workspaceProject,
   workspaceTabs,
@@ -14,6 +14,8 @@ import { GlassPanel } from "@/components/shared/glass-panel";
 type WorkspaceTopBarProps = {
   activeMode: WorkspaceMode;
   onModeChange: (mode: WorkspaceMode) => void;
+  onSubmit: () => void;
+  progress: number;
   saveState: "synced" | "saving" | "dirty";
   lastSavedAt: string;
 };
@@ -33,6 +35,8 @@ function getSaveTone(saveState: WorkspaceTopBarProps["saveState"]) {
 export function WorkspaceTopBar({
   activeMode,
   onModeChange,
+  onSubmit,
+  progress,
   saveState,
   lastSavedAt,
 }: WorkspaceTopBarProps) {
@@ -42,7 +46,7 @@ export function WorkspaceTopBar({
     <motion.div
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.62, ease: premiumEase }}
       className="shrink-0"
     >
       <GlassPanel
@@ -77,7 +81,13 @@ export function WorkspaceTopBar({
                 />
               ))}
             </div>
-            <GlowButton href="/submission-review">{workspaceProject.submitLabel}</GlowButton>
+            <button
+              type="button"
+              onClick={onSubmit}
+              className="inline-flex items-center justify-center rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-3 text-sm font-medium uppercase tracking-[0.22em] text-slate-950 shadow-[0_0_32px_rgba(103,232,249,0.22)] transition duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050913]"
+            >
+              {workspaceProject.submitLabel}
+            </button>
           </div>
         </div>
 
@@ -96,8 +106,8 @@ export function WorkspaceTopBar({
             <div className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-slate-300">
               <span className="text-slate-500">Mode:</span> {activeTab.label}
             </div>
-            <div className="hidden rounded-full border border-cyan-300/16 bg-cyan-300/8 px-4 py-2 text-sm text-cyan-100 xl:block">
-              Ready for deep work
+            <div className="hidden rounded-full border border-cyan-300/[0.16] bg-cyan-300/[0.08] px-4 py-2 text-sm text-cyan-100 xl:block">
+              Simulation {progress}% complete
             </div>
           </div>
         </div>

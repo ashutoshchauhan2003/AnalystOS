@@ -9,7 +9,7 @@ export function RecentActivityPanel() {
         <div className="mb-6 h-px w-20 bg-gradient-to-r from-cyan-300/70 to-transparent" />
         <div className="flex items-end justify-between gap-4">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/72">
+            <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">
               Recent Activity
             </p>
             <h2 className="mt-5 text-2xl font-semibold tracking-[-0.03em] text-white">
@@ -25,7 +25,7 @@ export function RecentActivityPanel() {
           {recentActivity.map((item, index) => (
             <div
               key={item.title}
-              className="rounded-[1.4rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+              className="rounded-[1.4rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
             >
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-4">

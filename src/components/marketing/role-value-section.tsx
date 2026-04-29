@@ -17,9 +17,9 @@ export function RoleValueSection() {
 
         <div className="mt-16 grid gap-6 xl:grid-cols-3">
           {rolePanels.map((panel, index) => (
-            <Reveal key={panel.eyebrow} delay={index * 0.12}>
+            <Reveal key={panel.eyebrow} delay={index * 0.12} hover="lift">
               <GlassPanel
-                className="group h-full min-h-[420px] bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-7 transition-transform duration-500 hover:-translate-y-1.5 lg:p-8"
+                className="group h-full min-h-[420px] bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-7 lg:p-8"
                 glow={index === 1 ? "cyan" : "blue"}
               >
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(103,232,249,0.12),transparent_28%)] opacity-70" />
@@ -32,7 +32,7 @@ export function RoleValueSection() {
                     <h3 className="mt-5 max-w-sm text-[1.9rem] font-semibold leading-[1.12] tracking-[-0.03em] text-white">
                       {panel.title}
                     </h3>
-                    <p className="mt-6 max-w-md text-base leading-8 text-slate-300/76">
+                    <p className="mt-6 max-w-md text-base leading-8 text-slate-300/[0.76]">
                       {panel.description}
                     </p>
                   </div>
@@ -41,7 +41,7 @@ export function RoleValueSection() {
                     {panel.bullets.map((bullet, bulletIndex) => (
                       <div
                         key={bullet}
-                        className="flex items-center justify-between rounded-[1.15rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.025))] px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                        className="flex items-center justify-between rounded-[1.15rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.025))] px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                       >
                         <div className="flex items-center gap-3">
                           <span className="text-xs uppercase tracking-[0.24em] text-slate-500">

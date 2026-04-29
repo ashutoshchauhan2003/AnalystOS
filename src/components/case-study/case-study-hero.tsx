@@ -14,9 +14,9 @@ export function CaseStudyHero() {
       className="grid gap-6 xl:grid-cols-[minmax(0,1.35fr)_360px]"
     >
       <GlassPanel className="bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-7 lg:p-8" glow="cyan">
-        <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/72">Portfolio Case Study</p>
+        <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">Portfolio Case Study</p>
         <div className="mt-5 flex flex-wrap gap-2">
-          <div className="rounded-full border border-cyan-300/22 bg-cyan-300/10 px-4 py-2 text-xs uppercase tracking-[0.24em] text-cyan-100">
+          <div className="rounded-full border border-cyan-300/[0.22] bg-cyan-300/10 px-4 py-2 text-xs uppercase tracking-[0.24em] text-cyan-100">
             {caseStudy.role}
           </div>
           <div className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs uppercase tracking-[0.24em] text-slate-300">
@@ -26,7 +26,7 @@ export function CaseStudyHero() {
         <h1 className="mt-6 max-w-[14ch] text-4xl font-semibold leading-[1] tracking-[-0.05em] text-white lg:text-6xl">
           {caseStudy.title}
         </h1>
-        <p className="mt-6 max-w-[56ch] text-lg leading-8 text-slate-300/78">{caseStudy.summary}</p>
+        <p className="mt-6 max-w-[56ch] text-lg leading-8 text-slate-300/[0.78]">{caseStudy.summary}</p>
         <p className="mt-5 max-w-[52ch] text-base leading-8 text-slate-400">{caseStudy.outcome}</p>
 
         <div className="mt-8 flex flex-wrap gap-4">
@@ -44,7 +44,7 @@ export function CaseStudyHero() {
           {caseStudy.heroMetrics.map((metric) => (
             <div
               key={metric.label}
-              className="rounded-[1.25rem] border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] px-4 py-4"
+              className="rounded-[1.25rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] px-4 py-4"
             >
               <p className="text-[11px] uppercase tracking-[0.28em] text-slate-500">{metric.label}</p>
               <p className="mt-3 text-2xl font-medium tracking-[-0.03em] text-white">{metric.value}</p>

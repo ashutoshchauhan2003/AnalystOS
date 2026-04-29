@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { SessionProvider } from "@/components/auth/session-provider";
 import "./globals.css";
 
 const siteUrl =
@@ -59,7 +60,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-[#03060d] text-slate-50 antialiased">{children}</body>
+      <body className="min-h-screen bg-[#03060d] text-slate-50 antialiased">
+        <SessionProvider>{children}</SessionProvider>
+      </body>
     </html>
   );
 }

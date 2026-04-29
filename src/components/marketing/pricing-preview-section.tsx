@@ -20,12 +20,12 @@ export function PricingPreviewSection() {
 
         <div className="mt-16 grid gap-6 xl:grid-cols-3">
           {pricingTiers.map((tier, index) => (
-            <Reveal key={tier.name} delay={index * 0.1}>
+            <Reveal key={tier.name} delay={index * 0.1} hover="lift">
               <GlassPanel
                 className={cn(
                   "h-full bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-7 lg:p-8",
                   tier.featured &&
-                    "border-cyan-300/35 bg-[linear-gradient(180deg,rgba(34,211,238,0.14),rgba(34,211,238,0.05))] shadow-[0_0_60px_rgba(103,232,249,0.16)]",
+                    "border-cyan-300/[0.35] bg-[linear-gradient(180deg,rgba(34,211,238,0.14),rgba(34,211,238,0.05))] shadow-[0_0_60px_rgba(103,232,249,0.16)]",
                 )}
                 glow={tier.featured ? "cyan" : "blue"}
               >
@@ -36,7 +36,7 @@ export function PricingPreviewSection() {
                       {tier.name}
                     </h3>
                     {tier.featured ? (
-                      <span className="rounded-full border border-cyan-300/35 bg-cyan-300/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-cyan-100">
+                      <span className="rounded-full border border-cyan-300/[0.35] bg-cyan-300/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-cyan-100">
                         Recommended
                       </span>
                     ) : null}
@@ -49,13 +49,13 @@ export function PricingPreviewSection() {
                     <span className="pb-2 text-slate-400">{tier.cadence}</span>
                   </div>
 
-                  <p className="mt-6 text-base leading-8 text-slate-300/76">{tier.description}</p>
+                  <p className="mt-6 text-base leading-8 text-slate-300/[0.76]">{tier.description}</p>
 
                   <div className="mt-8 space-y-3">
                     {tier.features.map((feature) => (
                       <div
                         key={feature}
-                        className="rounded-2xl border border-white/8 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] px-4 py-3 text-sm text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+                        className="rounded-2xl border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] px-4 py-3 text-sm text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
                       >
                         {feature}
                       </div>

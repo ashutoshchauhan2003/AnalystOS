@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { premiumEase, premiumTap } from "@/components/motion/presets";
 import { cn } from "@/lib/utils";
 
 type SegmentedOption<T extends string> = {
@@ -32,10 +33,12 @@ export function SegmentedControl<T extends string>({
         const isActive = option.id === value;
 
         return (
-          <button
+          <motion.button
             key={option.id}
             type="button"
             onClick={() => onChange(option.id)}
+            whileTap={premiumTap}
+            transition={{ duration: 0.24, ease: premiumEase }}
             className={cn(
               "relative overflow-hidden rounded-[1rem] px-4 py-2.5 text-sm transition",
               isActive ? "text-white" : "text-slate-400 hover:text-slate-100",
@@ -45,11 +48,11 @@ export function SegmentedControl<T extends string>({
               <motion.span
                 layoutId="workspace-segment"
                 className="absolute inset-0 rounded-[1rem] border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(34,211,238,0.18),rgba(34,211,238,0.08))] shadow-[0_0_28px_rgba(103,232,249,0.08),inset_0_1px_0_rgba(255,255,255,0.06)]"
-                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.34, ease: premiumEase }}
               />
             ) : null}
             <span className="relative z-10">{option.label}</span>
-          </button>
+          </motion.button>
         );
       })}
     </div>

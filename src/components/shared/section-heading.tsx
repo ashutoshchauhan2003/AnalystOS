@@ -21,7 +21,7 @@ export function SectionHeading({
       <h2 className="mt-4 max-w-[16ch] text-3xl font-semibold leading-[1.08] tracking-[-0.035em] text-white md:text-4xl">
         {title}
       </h2>
-      <p className="mt-5 max-w-[58ch] text-base leading-8 text-slate-300/74 md:text-lg">
+      <p className="mt-5 max-w-[58ch] text-base leading-8 text-slate-300/[0.74] md:text-lg">
         {description}
       </p>
     </div>

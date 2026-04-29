@@ -17,7 +17,7 @@ export function PremiumNavbar() {
           className="flex items-center justify-between rounded-full border border-white/10 bg-[linear-gradient(180deg,rgba(8,15,28,0.88),rgba(5,10,20,0.66))] px-6 py-4 shadow-[0_18px_50px_rgba(2,6,23,0.35),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-2xl"
         >
           <Link href="/" className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-cyan-300/35 bg-cyan-300/10 text-xs font-semibold tracking-[0.22em] text-cyan-200">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-cyan-300/[0.35] bg-cyan-300/10 text-xs font-semibold tracking-[0.22em] text-cyan-200">
               A3
             </span>
             <div>
@@ -44,7 +44,7 @@ export function PremiumNavbar() {
             <GlowButton href="/sign-in" variant="secondary">
               Sign In
             </GlowButton>
-            <GlowButton href="/sign-up">Start Building</GlowButton>
+            <GlowButton href="/dashboard">Start Building</GlowButton>
           </div>
         </motion.header>
       </Container>

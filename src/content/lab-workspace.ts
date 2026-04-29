@@ -1,4 +1,13 @@
+import salesDropScenario from "@/data/sales-drop-scenario.json";
+
 export type WorkspaceMode = "sql" | "insights" | "recommendation" | "preview";
+export type SimulationStepId =
+  | "understand-problem"
+  | "draft-sql"
+  | "run-analysis"
+  | "capture-insights"
+  | "write-recommendation"
+  | "prepare-submission";
 
 export type WorkspaceTab = {
   id: WorkspaceMode;
@@ -24,11 +33,80 @@ export type WorkspaceGuidance = {
   readiness: { label: string; value: string }[];
 };
 
+export type SimulationScenario = typeof salesDropScenario;
+
+export type SimulationStepState = {
+  id: SimulationStepId;
+  label: string;
+  description: string;
+  mode: WorkspaceMode;
+  completed: boolean;
+  active: boolean;
+};
+
+export type SimulationValidation = {
+  status: "idle" | "running" | "valid" | "invalid" | "submitted";
+  message: string;
+};
+
+export type MissionReadiness = {
+  label: string;
+  tone: "neutral" | "warning" | "success" | "cyan";
+  message: string;
+  confidence: "Low" | "Medium" | "High";
+  score: number;
+  completedItems: string[];
+  missingItems: string[];
+};
+
+export const simulationScenario: SimulationScenario = salesDropScenario;
+
+export const simulationStepDefinitions: Array<
+  Omit<SimulationStepState, "completed" | "active">
+> = [
+  {
+    id: "understand-problem",
+    label: "Understand the problem",
+    description: "Clarify the churn mission, dataset, audience, and final business decision.",
+    mode: "sql",
+  },
+  {
+    id: "draft-sql",
+    label: "Draft SQL",
+    description: "Write a focused query using cohort_accounts, retained revenue, and cohort dimensions.",
+    mode: "sql",
+  },
+  {
+    id: "run-analysis",
+    label: "Run analysis",
+    description: "Execute the SQL and validate a believable churn signal from the result set.",
+    mode: "sql",
+  },
+  {
+    id: "capture-insights",
+    label: "Capture insights",
+    description: "Turn the results into evidence-backed findings with clear business meaning.",
+    mode: "insights",
+  },
+  {
+    id: "write-recommendation",
+    label: "Write recommendation",
+    description: "Convert the analysis into a focused corrective action for leadership.",
+    mode: "recommendation",
+  },
+  {
+    id: "prepare-submission",
+    label: "Prepare submission",
+    description: "Confirm the final output is complete, readable, and ready to submit.",
+    mode: "preview",
+  },
+];
+
 export const workspaceProject = {
-  scenarioLabel: "Analyst Workbench",
-  name: "Churn Retention Simulation",
+  scenarioLabel: simulationScenario.scenarioLabel,
+  name: simulationScenario.title,
   summary:
-    "Operational analyst workspace for framing the problem, testing the hypothesis, structuring findings, and assembling a submission-ready recommendation.",
+    "Operational analyst simulation for diagnosing a 20% sales decline, validating the signal with SQL, and submitting a recommendation.",
   statusChips: ["Desktop Workbench", "Hybrid Lab System", "Local Simulation"],
   saveLabel: "Autosave",
   submitLabel: "Submit Work",
@@ -63,32 +141,23 @@ export const workspaceTabs: WorkspaceTab[] = [
 
 export const problemBrief = {
   eyebrow: "Problem Brief",
-  title: "Churn Retention Simulation",
-  summary:
-    "A subscription product is losing retained revenue shortly after onboarding. The analyst objective is to isolate the breakpoints, quantify the exposure, and recommend focused interventions that can be executed within one quarter.",
-  audience: "Product leadership and lifecycle operations",
-  deliverable: "Executive-facing recommendation memo with supporting analysis",
-  objectives: [
-    "Identify the top churn drivers by lifecycle stage",
-    "Quantify revenue-at-risk across onboarding cohorts",
-    "Recommend three practical interventions with analyst rationale",
-  ],
+  title: simulationScenario.title,
+  summary: simulationScenario.summary,
+  audience: simulationScenario.audience,
+  deliverable: simulationScenario.deliverable,
+  objectives: simulationScenario.questions,
   constraints: [
-    "Use only the provided cohort and account tables",
+    "Use only the provided cohort_accounts churn dataset",
     "Frame findings for decision-makers, not a technical audience",
-    "Keep the intervention set achievable inside a single quarter",
+    "Separate query evidence from recommendation opinion",
   ],
-  successCriteria: [
-    "Lead with the highest-value churn segment",
-    "Connect the signal to business consequence",
-    "Translate the insight into measurable action",
-  ],
+  successCriteria: simulationScenario.successCriteria,
 };
 
 export const workspaceMetrics: WorkspaceMetric[] = [
-  { label: "Rows scanned", value: "1.2M" },
-  { label: "Query accuracy", value: "94%" },
-  { label: "Insight confidence", value: "High" },
+  { label: "Rows loaded", value: "48.9K" },
+  { label: "Dataset", value: "Churn" },
+  { label: "Engine", value: "API" },
 ];
 
 export const sqlModeCards: WorkspaceCard[] = [
@@ -246,19 +315,21 @@ export const workspaceGuidanceByMode: Record<WorkspaceMode, WorkspaceGuidance> =
 export const initialSqlDraft = `-- retained revenue at risk by onboarding band
 select
   onboarding_band,
+  segment,
+  region,
   count(*) as accounts,
   sum(retained_revenue) as retained_revenue,
-  avg(churn_risk_score) as avg_risk
+  avg(churn_risk_score) as avg_churn_risk
 from cohort_accounts
-group by onboarding_band
-order by retained_revenue desc;`;
+group by onboarding_band, segment, region
+order by retained_revenue asc;`;
 
-export const initialInsightNotes = `Accounts below 40% onboarding completion create the highest retained-revenue exposure and begin declining before cancellation becomes visible.
+export const initialInsightNotes = `North America Enterprise appears to explain the largest portion of the sales decline based on revenue variance.
 
-The strongest business implication is timing: by the time churn is explicit, the expansion path is already damaged.
+The signal should be checked against channel mix, discounting, and pipeline conversion before assuming broad demand weakness.
 
-The likely operational lever is activation quality in the first 30 days, not additional lifecycle messaging alone.`;
+The likely operating issue is concentrated enough for a targeted recovery plan rather than a company-wide sales reset.`;
 
-export const initialRecommendation = `Prioritize a milestone-based onboarding intervention for low-activation accounts in the first 30 days.
+export const initialRecommendation = `Prioritize a focused recovery sprint for North America Enterprise accounts.
 
-This recommendation focuses on the cohort creating the largest retained-revenue risk and addresses the signal before cancellation is visible. The intervention should combine activation milestone tracking, targeted setup support, and weekly escalation for accounts stuck below key setup thresholds.`;
+The first action should combine pipeline inspection, discount governance, and manager review of stalled enterprise opportunities. This keeps the response tied to the largest diagnosed revenue variance instead of spreading effort across every segment.`;

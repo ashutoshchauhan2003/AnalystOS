@@ -37,6 +37,16 @@ npm run dev
 
 The project does not require any secret environment variables to build.
 
+## Authentication model
+
+Authentication is demo-only. The current `/sign-in` and `/sign-up` flows use a
+credentials provider that accepts any valid email with a password of at least 6
+characters. This is intended to gate the demo `/dashboard` and `/lab` simulation
+routes during development, not to provide production account security.
+
+Before using this project for real users, replace the demo credentials flow with
+a production authentication strategy and configure a real `NEXTAUTH_SECRET`.
+
 Optional:
 
 - `NEXT_PUBLIC_SITE_URL`

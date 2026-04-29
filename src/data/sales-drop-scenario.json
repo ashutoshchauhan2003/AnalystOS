@@ -1,0 +1,92 @@
+{
+  "id": "churn-retention-mission",
+  "title": "Churn risk increased, find why",
+  "scenarioLabel": "Churn Diagnostic Simulation",
+  "summary": "Leadership sees retained revenue dropping in early cohorts and needs an analyst to isolate the churn driver, validate the signal with SQL, and recommend a focused retention action.",
+  "audience": "Product leadership, lifecycle operations, and customer success",
+  "deliverable": "Decision-ready churn diagnostic memo with query-backed evidence",
+  "dataset": {
+    "name": "cohort_accounts",
+    "description": "Local mock churn dataset representing account cohorts, onboarding completion, retained revenue, and churn risk.",
+    "rowCount": "48,920",
+    "tables": [
+      {
+        "name": "cohort_accounts",
+        "columns": ["account_id", "region", "segment", "onboarding_band", "accounts", "retained_revenue", "prior_retained_revenue", "churn_risk_score", "churned_accounts"]
+      },
+      {
+        "name": "cohort_activity",
+        "columns": ["cohort_month", "region", "segment", "activation_rate", "support_tickets", "expansion_readiness"]
+      }
+    ]
+  },
+  "questions": [
+    "Which onboarding cohort explains most of the retained-revenue decline?",
+    "Is the churn signal driven by onboarding completion, segment mix, or region?",
+    "What action should lifecycle leadership take first?"
+  ],
+  "successCriteria": [
+    "Use SQL to compare retained revenue and churn risk across cohort bands.",
+    "Identify the largest churn exposure by a useful business dimension.",
+    "Generate an insight that separates evidence from interpretation.",
+    "Submit a recommendation tied to a measurable operating action."
+  ],
+  "validation": {
+    "requiredSqlTerms": ["cohort_accounts", "retained_revenue"],
+    "preferredSqlTerms": ["onboarding_band", "segment", "region", "group by"],
+    "insightTerms": ["north america", "enterprise", "onboarding", "churn", "retained revenue", "activation"],
+    "recommendationTerms": ["prioritize", "retain", "onboarding", "churn", "enterprise", "action"]
+  },
+  "mockResults": [
+    {
+      "driver": "North America / Enterprise",
+      "currentRevenue": "$3.84M",
+      "priorRevenue": "$5.18M",
+      "change": "-25.9%",
+      "variance": "-$1.34M",
+      "signal": "Largest revenue loss"
+    },
+    {
+      "driver": "EMEA / Mid-market",
+      "currentRevenue": "$2.18M",
+      "priorRevenue": "$2.46M",
+      "change": "-11.4%",
+      "variance": "-$280K",
+      "signal": "Secondary decline"
+    },
+    {
+      "driver": "Digital / SMB",
+      "currentRevenue": "$1.72M",
+      "priorRevenue": "$1.88M",
+      "change": "-8.5%",
+      "variance": "-$160K",
+      "signal": "Moderate softness"
+    },
+    {
+      "driver": "Partner / Enterprise",
+      "currentRevenue": "$2.64M",
+      "priorRevenue": "$2.58M",
+      "change": "+2.3%",
+      "variance": "+$60K",
+      "signal": "Stable"
+    }
+  ],
+  "hints": [
+    {
+      "step": "draft-sql",
+      "text": "Start by grouping cohort_accounts by onboarding_band, segment, or region and compare retained_revenue with churn_risk_score."
+    },
+    {
+      "step": "run-analysis",
+      "text": "Run the query after the business dimension is clear. The strongest answer should reveal the highest-risk cohort, not just a broad average."
+    },
+    {
+      "step": "capture-insights",
+      "text": "A strong insight names the cohort, connects retained-revenue loss to churn risk, and explains why the issue is actionable."
+    },
+    {
+      "step": "write-recommendation",
+      "text": "Tie the recommendation to onboarding intervention for the diagnosed cohort, not to a generic retention program."
+    }
+  ]
+}

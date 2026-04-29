@@ -12,7 +12,7 @@ export function DashboardKpiGrid() {
             glow={index === 0 || index === 3 ? "cyan" : "blue"}
           >
             <div className="mb-4 flex items-center justify-between">
-              <p className="text-[11px] uppercase tracking-[0.32em] text-cyan-200/68">
+              <p className="text-[11px] uppercase tracking-[0.32em] text-cyan-200/[0.68]">
                 {item.label}
               </p>
               <span className="h-2.5 w-2.5 rounded-full bg-cyan-300/80 shadow-[0_0_16px_rgba(103,232,249,0.7)]" />

@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { employerCandidates } from "@/content/employer-directory";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL && process.env.NEXT_PUBLIC_SITE_URL.length > 0
@@ -22,5 +23,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.75,
     },
+    ...employerCandidates.map((candidate) => ({
+      url: `${siteUrl}${candidate.profileHref}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
   ];
 }

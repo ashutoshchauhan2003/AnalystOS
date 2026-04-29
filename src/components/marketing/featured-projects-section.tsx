@@ -17,9 +17,9 @@ export function FeaturedProjectsSection() {
 
         <div className="mt-16 grid gap-6 lg:grid-cols-3">
           {featuredProjects.map((project, index) => (
-            <Reveal key={project.title} delay={index * 0.1}>
+            <Reveal key={project.title} delay={index * 0.1} hover="lift">
               <GlassPanel
-                className="h-full bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-7 transition-transform duration-500 hover:-translate-y-1.5 lg:p-8"
+                className="h-full bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-7 lg:p-8"
                 glow={index === 1 ? "cyan" : "blue"}
               >
                 <div className="flex h-full flex-col">
@@ -33,12 +33,12 @@ export function FeaturedProjectsSection() {
                         {project.title}
                       </h3>
                     </div>
-                    <span className="rounded-full border border-cyan-300/20 bg-cyan-300/8 px-3 py-1 text-xs uppercase tracking-[0.18em] text-cyan-200/70">
+                    <span className="rounded-full border border-cyan-300/20 bg-cyan-300/[0.08] px-3 py-1 text-xs uppercase tracking-[0.18em] text-cyan-200/70">
                       Real Work
                     </span>
                   </div>
 
-                  <p className="mt-6 flex-1 text-base leading-8 text-slate-300/76">{project.problem}</p>
+                  <p className="mt-6 flex-1 text-base leading-8 text-slate-300/[0.76]">{project.problem}</p>
 
                   <div className="mt-8 flex flex-wrap gap-2.5">
                     {project.tools.map((tool) => (
@@ -51,7 +51,7 @@ export function FeaturedProjectsSection() {
                     ))}
                   </div>
 
-                  <div className="mt-9 rounded-[24px] border border-cyan-300/15 bg-[linear-gradient(180deg,rgba(34,211,238,0.12),rgba(34,211,238,0.04))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+                  <div className="mt-9 rounded-[24px] border border-cyan-300/[0.15] bg-[linear-gradient(180deg,rgba(34,211,238,0.12),rgba(34,211,238,0.04))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
                     <p className="text-[11px] uppercase tracking-[0.28em] text-cyan-200/70">
                       Projected impact
                     </p>
