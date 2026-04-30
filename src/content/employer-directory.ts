@@ -19,9 +19,9 @@ export type EmployerCandidate = {
 };
 
 export const employerDirectory = {
-  title: "Employer Directory",
+  title: "AnalystOS Employer Directory",
   summary:
-    "A recruiter-facing discovery surface for scanning analyst candidates by proof-of-skill, featured work, and hiring signal.",
+    "A recruiter-facing AnalystOS discovery surface for scanning analyst candidates by proof-of-skill, featured work, and hiring signal.",
   searchPlaceholder: "Search by skill, project, or analyst name",
   filters: {
     skills: ["SQL", "Cohort Analysis", "Revenue Diagnostics", "Executive Storytelling", "Operations Analytics"],

@@ -28,7 +28,7 @@ export function LabLoadingScreen() {
   return (
     <LabShell className="flex items-center justify-center">
       <div className="relative z-10 rounded-full border border-cyan-300/20 bg-cyan-300/10 px-5 py-3 text-[11px] uppercase tracking-[0.32em] text-cyan-100 shadow-[0_0_28px_rgba(103,232,249,0.12)]">
-        Loading Analyst Simulation Room
+        Loading AnalystOS Simulation Room
       </div>
     </LabShell>
   );

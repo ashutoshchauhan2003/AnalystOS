@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { LabWorkspaceExperience } from "@/components/lab-workspace/lab-workspace-experience";
 
 export const metadata: Metadata = {
-  title: "Lab Workspace",
-  description: "Operational analyst workbench for SQL drafting, insight framing, and recommendation development.",
+  title: "AnalystOS Lab Workspace",
+  description:
+    "Operational AnalystOS workbench for SQL drafting, insight framing, recommendation development, and portfolio-ready proof.",
   robots: {
     index: false,
     follow: false,
@@ -11,5 +13,9 @@ export const metadata: Metadata = {
 };
 
 export default function LabWorkspacePage() {
-  return <LabWorkspaceExperience />;
+  return (
+    <Suspense fallback={null}>
+      <LabWorkspaceExperience />
+    </Suspense>
+  );
 }

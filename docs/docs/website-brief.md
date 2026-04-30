@@ -1,4 +1,4 @@
-# Website Brief — Analyst 3D Premium Platform
+# Website Brief — AnalystOS Premium Platform
 
 ## 1. Overview
 

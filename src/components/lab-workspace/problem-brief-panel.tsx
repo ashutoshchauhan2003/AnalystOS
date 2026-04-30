@@ -1,7 +1,7 @@
 import { Reveal } from "@/components/motion/reveal";
 import { GlassPanel } from "@/components/shared/glass-panel";
+import type { Lab } from "@/content/labs";
 import {
-  problemBrief,
   simulationScenario,
   workspaceGuidanceByMode,
   workspaceTabs,
@@ -14,6 +14,7 @@ import { SimulationProgressPanel } from "@/components/lab-workspace/simulation-p
 import { StatusPill } from "@/components/lab-workspace/status-pill";
 
 type ProblemBriefPanelProps = {
+  selectedLab: Lab;
   activeMode: WorkspaceMode;
   readiness: MissionReadiness;
   progress: number;
@@ -24,6 +25,7 @@ type ProblemBriefPanelProps = {
 };
 
 export function ProblemBriefPanel({
+  selectedLab,
   activeMode,
   readiness,
   progress,
@@ -45,16 +47,18 @@ export function ProblemBriefPanel({
         <div className="shrink-0">
           <div className="mb-4 h-px w-14 bg-gradient-to-r from-cyan-300/70 to-transparent" />
           <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">
-            {problemBrief.eyebrow}
+            Active Practice Challenge
           </p>
           <h2 className="mt-3 text-xl font-semibold tracking-[-0.03em] text-white">
-            {problemBrief.title}
+            {selectedLab.title}
           </h2>
-          <p className="mt-4 text-[15px] leading-7 text-slate-300/[0.84]">{problemBrief.summary}</p>
+          <p className="mt-4 text-[15px] leading-7 text-slate-300/[0.84]">
+            {selectedLab.brief}
+          </p>
 
           <div className="mt-5 flex flex-wrap gap-2">
             <StatusPill label="Brief" tone="neutral" />
-            <StatusPill label="Dataset Loaded" tone="cyan" />
+            <StatusPill label={selectedLab.difficulty} tone="cyan" />
             <StatusPill label={activeTab.shortLabel} tone="neutral" />
           </div>
         </div>
@@ -65,8 +69,7 @@ export function ProblemBriefPanel({
               Scenario
             </p>
             <p className="mt-3 text-[15px] leading-7 text-slate-100">
-              A subscription product is losing retained revenue shortly after onboarding.
-              Find the highest-risk segment and recommend corrective action.
+              {selectedLab.expectedOutput}
             </p>
           </section>
 
@@ -81,9 +84,12 @@ export function ProblemBriefPanel({
           <section>
             <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500">Dataset</p>
             <div className="mt-3 rounded-[1.1rem] border border-white/[0.08] bg-white/[0.03] px-4 py-4">
-              <p className="text-sm font-medium text-slate-100">{simulationScenario.dataset.name}</p>
+              <p className="text-sm font-medium text-slate-100">
+                {simulationScenario.dataset.name}
+              </p>
               <p className="mt-2 text-sm leading-7 text-slate-400">
-                {simulationScenario.dataset.description}
+                {selectedLab.datasetDescription} The SQL workbench currently executes against the
+                mock cohort_accounts table while this challenge runs in prototype mode.
               </p>
               <p className="mt-3 text-[11px] uppercase tracking-[0.24em] text-cyan-200/70">
                 {simulationScenario.dataset.rowCount} rows loaded
@@ -117,7 +123,7 @@ export function ProblemBriefPanel({
           <section>
             <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500">Mission</p>
             <div className="mt-3 space-y-2.5">
-              {problemBrief.objectives.slice(0, 2).map((item, index) => (
+              {selectedLab.deliverables.slice(0, 3).map((item, index) => (
                 <div
                   key={item}
                   className="rounded-[1.1rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] px-4 py-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
@@ -134,7 +140,11 @@ export function ProblemBriefPanel({
           <section>
             <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500">Guardrails</p>
             <div className="mt-3 space-y-2.5">
-              {problemBrief.constraints.slice(0, 2).map((item) => (
+              {[
+                "Use the mock cohort_accounts table for executable SQL validation",
+                "Explain the business signal in stakeholder-readable language",
+                "Connect the result table to an insight and recommendation",
+              ].map((item) => (
                 <div
                   key={item}
                   className="rounded-[1.1rem] border border-white/[0.08] bg-white/[0.03] px-4 py-3.5 text-sm leading-7 text-slate-300"
@@ -148,7 +158,7 @@ export function ProblemBriefPanel({
           <section>
             <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500">Win Condition</p>
             <div className="mt-3 rounded-[1.1rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(34,211,238,0.07),rgba(34,211,238,0.02))] px-4 py-3.5 text-sm leading-7 text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
-              {problemBrief.successCriteria[0]}
+              {selectedLab.expectedOutput}
             </div>
           </section>
         </div>

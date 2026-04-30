@@ -11,6 +11,7 @@ import { StatusPill } from "@/components/lab-workspace/status-pill";
 import { WorkspaceInfoCard } from "@/components/lab-workspace/workspace-info-card";
 import { WorkspacePanelHeader } from "@/components/lab-workspace/workspace-panel-header";
 import { GlassPanel } from "@/components/shared/glass-panel";
+import type { Lab } from "@/content/labs";
 import {
   insightEvidenceCards,
   recommendationFrames,
@@ -36,6 +37,7 @@ type QueryResult = {
 };
 
 type AnalysisWorkAreaProps = {
+  selectedLab: Lab;
   activeMode: WorkspaceMode;
   sqlDraft: string;
   insightNotes: string;
@@ -1059,6 +1061,7 @@ function PreviewMode({
 }
 
 export function AnalysisWorkArea({
+  selectedLab,
   activeMode,
   sqlDraft,
   insightNotes,
@@ -1099,10 +1102,11 @@ export function AnalysisWorkArea({
           />
           <WorkspacePanelHeader
             eyebrow="Analysis Surface"
-            title="Structured reasoning workspace"
-            description={activeTab.description}
+            title={selectedLab.title}
+            description={`${activeTab.description} Current challenge output: ${selectedLab.portfolioOutput}`}
             aside={
               <>
+                <StatusPill label={selectedLab.difficulty} tone="cyan" />
                 {workspaceMetrics.slice(0, 2).map((metric) => (
                   <StatusPill key={metric.label} label={`${metric.label}: ${metric.value}`} tone="neutral" />
                 ))}

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { CaseStudyPage } from "@/components/case-study/case-study-page";
 
 export const metadata: Metadata = {
-  title: "Churn Retention Simulation",
+  title: "AnalystOS Churn Retention Simulation",
   description:
-    "Recruiter-friendly business analyst case study showing SQL thinking, cohort analysis, recommendation quality, and business impact.",
+    "Recruiter-friendly AnalystOS case study showing SQL thinking, cohort analysis, recommendation quality, and business impact.",
   alternates: {
     canonical: "/case-studies/churn-retention-simulation",
   },

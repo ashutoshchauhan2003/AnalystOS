@@ -3,9 +3,11 @@ import { GlassPanel } from "@/components/shared/glass-panel";
 import Link from "next/link";
 
 const footerLinks = [
-  { label: "Courses", href: "/courses" },
-  { label: "Projects", href: "/projects" },
-  { label: "Pricing", href: "/pricing" },
+  { label: "Paths", href: "/paths" },
+  { label: "Labs", href: "/labs" },
+  { label: "Jobs", href: "/jobs" },
+  { label: "Recruiters", href: "/recruiters" },
+  { label: "Pricing", href: "/#pricing" },
   { label: "Sign In", href: "/sign-in" },
 ];
 
@@ -17,10 +19,10 @@ export function PremiumFooter() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <div className="mb-5 h-px w-16 bg-gradient-to-r from-cyan-300/70 to-transparent" />
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-white">Analyst 3D</p>
+              <p className="text-sm font-medium uppercase tracking-[0.3em] text-white">AnalystOS</p>
               <p className="mt-3 max-w-lg text-sm leading-7 text-slate-400">
-                Premium analyst learning, portfolio publishing, and hiring signal in one connected
-                product experience.
+                Free-core analyst practice, portfolio-ready proof, and recruiter discovery in one
+                connected product experience.
               </p>
             </div>
 

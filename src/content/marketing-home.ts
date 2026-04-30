@@ -1,13 +1,19 @@
 export const navItems = [
-  { label: "Platform", href: "#platform" },
-  { label: "Projects", href: "#projects" },
-  { label: "Flow", href: "#flow" },
-  { label: "Outcomes", href: "#outcomes" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "Platform", href: "/#platform" },
+  { label: "Paths", href: "/paths" },
+  { label: "Labs", href: "/labs" },
+  { label: "Jobs", href: "/jobs" },
+  { label: "Recruiters", href: "/recruiters" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Diagnostic", href: "/diagnostic" },
+  { label: "Roadmap", href: "/roadmap" },
+  { label: "Flow", href: "/#flow" },
+  { label: "Outcomes", href: "/#outcomes" },
+  { label: "Pricing", href: "/#pricing" },
 ];
 
 export const heroMetrics = [
-  { label: "Hiring-ready analyst tracks", value: "12" },
+  { label: "Job-ready analyst tracks", value: "12" },
   { label: "Portfolio-grade projects", value: "48" },
   { label: "Workflow simulations", value: "Live" },
 ];
@@ -15,7 +21,7 @@ export const heroMetrics = [
 export const rolePanels = [
   {
     eyebrow: "For Analysts",
-    title: "Train on business problems that look and feel like the work itself.",
+    title: "Train inside AnalystOS on business problems that feel like the work itself.",
     description:
       "Move beyond lectures into guided analysis labs, decision frameworks, and presentation-ready deliverables that mirror modern analyst teams.",
     bullets: ["Structured learning arcs", "Portfolio-quality outputs", "Decision-making reps"],
@@ -24,14 +30,14 @@ export const rolePanels = [
     eyebrow: "For Learners",
     title: "Turn progress into visible proof with polished case studies and measurable growth.",
     description:
-      "Every course path leads into practice, publishable artifacts, and a profile that shows how you think, not just what you watched.",
+      "Every AnalystOS path leads into practice, publishable artifacts, and a profile that shows how you think, not just what you watched.",
     bullets: ["Progress intelligence", "Review-ready submissions", "Public skill showcase"],
   },
   {
     eyebrow: "For Recruiters",
     title: "Evaluate candidates through signal-rich work, skills, and business impact.",
     description:
-      "Browse analyst portfolios, compare project depth, and shortlist candidates using evidence grounded in real workflow execution.",
+      "Browse AnalystOS portfolios, compare project depth, and shortlist candidates using evidence grounded in real workflow execution.",
     bullets: ["Outcome-focused previews", "Skill-tag filters", "Shortlist workflow"],
   },
 ];
@@ -113,8 +119,8 @@ export const trustStats = [
 export const pricingTiers = [
   {
     name: "Core",
-    price: "$39",
-    cadence: "/month",
+    price: "Free",
+    cadence: "",
     description: "For learners building their first serious analyst portfolio.",
     features: ["Guided learning paths", "Portfolio project access", "Profile publishing"],
   },
@@ -130,7 +136,7 @@ export const pricingTiers = [
     name: "Teams",
     price: "Custom",
     cadence: "",
-    description: "For academies, bootcamps, and hiring teams running analyst talent programs.",
+    description: "For academies, bootcamps, and hiring teams running AnalystOS talent programs.",
     features: ["Recruiter access", "Shared candidate views", "Workflow analytics"],
   },
 ];

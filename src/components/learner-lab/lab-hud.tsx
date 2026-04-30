@@ -38,13 +38,13 @@ function LabHudComponent({
           <GlassPanel className="bg-[linear-gradient(180deg,rgba(255,255,255,0.09),rgba(255,255,255,0.03))] p-5" glow="blue">
             <div className="flex items-center gap-4">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-300/25 bg-cyan-300/10 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200">
-                A3
+                AOS
               </div>
               <div>
                 <p className="text-sm font-medium uppercase tracking-[0.28em] text-white">
-                  Analyst 3D
+                  AnalystOS
                 </p>
-                <p className="mt-1 text-xs text-slate-400">Learner Lab Simulation</p>
+                <p className="mt-1 text-xs text-slate-400">Job-Ready Lab Simulation</p>
               </div>
             </div>
 
@@ -67,7 +67,7 @@ function LabHudComponent({
                   Analyst Simulation Room
                 </p>
                 <h1 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-white lg:text-3xl">
-                  Explore stations, inspect surfaces, activate analyst workflows.
+                  Explore stations, inspect surfaces, activate job-ready analyst workflows.
                 </h1>
               </div>
 
@@ -251,8 +251,8 @@ function LabHudComponent({
 
                 <div className="mt-7 flex flex-wrap gap-4">
                   <GlowButton href="/lab">Open Lab Surface</GlowButton>
-                  <GlowButton href="/progress" variant="secondary">
-                    View Overlay Progress
+                  <GlowButton href="/dashboard" variant="secondary">
+                    View Dashboard Progress
                   </GlowButton>
                 </div>
               </motion.div>

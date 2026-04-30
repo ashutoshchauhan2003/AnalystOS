@@ -1,9 +1,10 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { SUPABASE_SESSION_COOKIE } from "@/lib/supabase/auth";
+import { isSupabaseConfigured, supabase } from "@/lib/supabase/client";
 
 type AuthFormProps = {
   mode: "sign-in" | "sign-up";
@@ -25,19 +26,43 @@ export function AuthForm({ mode }: AuthFormProps) {
     setError("");
     setIsSubmitting(true);
 
-    const result = await signIn("credentials", {
-      email,
-      password,
-      name,
-      redirect: false,
-    });
+    const result = isSignUp
+      ? await supabase?.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              name: name || email.split("@")[0],
+              role: "learner",
+            },
+          },
+        })
+      : await supabase?.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-    setIsSubmitting(false);
-
-    if (result?.error) {
-      setError("Use a valid email and a password with at least 6 characters.");
+    if (isSupabaseConfigured && result?.error) {
+      setIsSubmitting(false);
+      setError(result.error.message);
       return;
     }
+
+    if (isSupabaseConfigured && isSignUp && result?.data.user) {
+      await supabase?.from("profiles").upsert(
+        {
+          id: result.data.user.id,
+          name: name || email.split("@")[0],
+          email,
+          role: "learner",
+        },
+        { onConflict: "id" },
+      );
+    }
+
+    document.cookie = `${SUPABASE_SESSION_COOKIE}=1; path=/; max-age=604800; samesite=lax`;
+
+    setIsSubmitting(false);
 
     router.push(callbackUrl);
     router.refresh();
@@ -46,8 +71,9 @@ export function AuthForm({ mode }: AuthFormProps) {
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
       <div className="rounded-2xl border border-cyan-300/[0.18] bg-cyan-300/[0.055] px-4 py-3 text-sm leading-6 text-cyan-50">
-        Demo simulation login only. Use any valid email and a password with at least
-        6 characters; this is not a real secure account system.
+        {isSupabaseConfigured
+          ? "AnalystOS uses Supabase Auth for this build. Sign in or create an account to persist your session."
+          : "Supabase env variables are missing, so AnalystOS is using a local demo session fallback."}
       </div>
 
       {isSignUp ? (
@@ -121,10 +147,10 @@ export function AuthForm({ mode }: AuthFormProps) {
         className="flex w-full items-center justify-center rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-4 text-sm font-semibold uppercase tracking-[0.24em] text-slate-950 shadow-[0_0_36px_rgba(103,232,249,0.2)] transition hover:-translate-y-0.5 hover:bg-cyan-200 disabled:cursor-wait disabled:opacity-70 disabled:hover:translate-y-0"
       >
         {isSubmitting
-          ? "Opening demo..."
+          ? "Opening workspace..."
           : isSignUp
-            ? "Create Demo Workspace"
-            : "Enter Demo Workspace"}
+            ? "Create Workspace"
+            : "Enter Workspace"}
       </button>
 
       {isSignUp ? (

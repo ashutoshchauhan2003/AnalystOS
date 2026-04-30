@@ -12,13 +12,13 @@ export function LearnerSidebar() {
       <div>
         <div className="flex items-center gap-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-cyan-300/25 bg-cyan-300/10 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200">
-            A3
+            AOS
           </div>
           <div>
             <p className="text-sm font-medium uppercase tracking-[0.28em] text-white">
-              Analyst 3D
+              AnalystOS
             </p>
-            <p className="mt-1 text-xs text-slate-400">Learner Workspace</p>
+            <p className="mt-1 text-xs text-slate-400">Learner Operating System</p>
           </div>
         </div>
 

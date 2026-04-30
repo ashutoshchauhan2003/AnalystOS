@@ -11,9 +11,9 @@ import { PremiumFooter } from "@/components/layout/premium-footer";
 import { PageTransition } from "@/components/motion/page-transition";
 
 export const metadata: Metadata = {
-  title: "Homepage",
+  title: "Free-Core Job-Ready Analytics Lab",
   description:
-    "Cinematic analyst learning platform with immersive dashboard experiences, lab workspaces, portfolio-ready case studies, and recruiter-facing discovery.",
+    "AnalystOS is a free-core job-ready analytics lab where learners practise real analyst tasks, build portfolio-ready proof, and become discoverable to recruiters.",
 };
 
 export default function MarketingHomePage() {

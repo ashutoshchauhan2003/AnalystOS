@@ -38,7 +38,7 @@ export const labStations: LabStation[] = [
     detailEyebrow: "Mission Control",
     detailTitle: "Analyst simulation room",
     detailLines: [
-      "A guided 3D lab built around stations instead of flat dashboard sections.",
+      "A guided AnalystOS lab built around stations instead of flat dashboard sections.",
       "Use station navigation or keyboard shortcuts to travel between work surfaces.",
       "The environment is optimized for focused inspection, not game-like wandering.",
     ],

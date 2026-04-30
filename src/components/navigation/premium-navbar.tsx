@@ -18,13 +18,13 @@ export function PremiumNavbar() {
         >
           <Link href="/" className="flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-full border border-cyan-300/[0.35] bg-cyan-300/10 text-xs font-semibold tracking-[0.22em] text-cyan-200">
-              A3
+              AOS
             </span>
             <div>
               <p className="text-sm font-medium tracking-[0.28em] text-white uppercase">
-                Analyst 3D
+                AnalystOS
               </p>
-              <p className="text-xs text-slate-400">Premium Analyst Platform</p>
+              <p className="text-xs text-slate-400">Job-Ready Analytics Lab</p>
             </div>
           </Link>
 
@@ -44,7 +44,7 @@ export function PremiumNavbar() {
             <GlowButton href="/sign-in" variant="secondary">
               Sign In
             </GlowButton>
-            <GlowButton href="/dashboard">Start Building</GlowButton>
+            <GlowButton href="/dashboard">Open Lab</GlowButton>
           </div>
         </motion.header>
       </Container>

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { EmployerDirectoryPage } from "@/components/employer-directory/employer-directory-page";
 
 export const metadata: Metadata = {
-  title: "Employer Directory",
+  title: "AnalystOS Employer Directory",
   description:
-    "Recruiter-facing candidate discovery page for scanning analyst proof-of-skill, featured projects, and hiring signals.",
+    "Recruiter-facing AnalystOS discovery page for scanning analyst proof-of-skill, featured projects, and hiring signals.",
   alternates: {
     canonical: "/employers",
   },

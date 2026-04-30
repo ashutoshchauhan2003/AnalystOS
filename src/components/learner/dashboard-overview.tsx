@@ -20,17 +20,17 @@ export function DashboardOverview() {
               Welcome Back
             </p>
             <h1 className="mt-5 max-w-[12ch] text-4xl font-semibold leading-[1.02] tracking-[-0.05em] text-white lg:text-[3.4rem]">
-              Your analyst workspace is live.
+              Your AnalystOS workspace is live.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300/[0.76]">
-              Keep moving through structured labs, sharpen your portfolio signal, and turn today&apos;s
-              work into visible progress recruiters can trust.
+              Keep moving through structured labs, sharpen your portfolio-ready proof, and turn
+              today&apos;s work into visible progress recruiters can trust.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
               <GlowButton href="/lab">Resume Current Lab</GlowButton>
-              <GlowButton href="/progress" variant="secondary">
-                View Progress Layer
+              <GlowButton href="/dashboard" variant="secondary">
+                View Progress
               </GlowButton>
             </div>
           </div>

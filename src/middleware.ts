@@ -1,25 +1,31 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
-
-const authSecret =
-  process.env.NEXTAUTH_SECRET ?? "analystos-local-development-secret";
+import { SUPABASE_SESSION_COOKIE } from "@/lib/supabase/auth";
 
 export async function middleware(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   const isProtectedRoute =
-    pathname.startsWith("/dashboard") || pathname.startsWith("/lab");
+    pathname === "/dashboard" ||
+    pathname.startsWith("/dashboard/") ||
+    pathname === "/lab" ||
+    pathname.startsWith("/lab/") ||
+    pathname === "/review" ||
+    pathname.startsWith("/review/") ||
+    pathname === "/submissions" ||
+    pathname.startsWith("/submissions/") ||
+    pathname === "/portfolio" ||
+    pathname.startsWith("/portfolio/");
 
   if (!isProtectedRoute) {
     return NextResponse.next();
   }
 
-  const token = await getToken({
-    req: request,
-    secret: authSecret,
-  });
+  const hasSupabaseSession = request.cookies.has(SUPABASE_SESSION_COOKIE);
+  const supabaseConfigured = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  );
 
-  if (token) {
+  if (hasSupabaseSession || !supabaseConfigured) {
     return NextResponse.next();
   }
 

@@ -14,6 +14,7 @@ import { GlassPanel } from "@/components/shared/glass-panel";
 type WorkspaceTopBarProps = {
   activeMode: WorkspaceMode;
   onModeChange: (mode: WorkspaceMode) => void;
+  onSaveDraft: () => void;
   onSubmit: () => void;
   progress: number;
   saveState: "synced" | "saving" | "dirty";
@@ -35,6 +36,7 @@ function getSaveTone(saveState: WorkspaceTopBarProps["saveState"]) {
 export function WorkspaceTopBar({
   activeMode,
   onModeChange,
+  onSaveDraft,
   onSubmit,
   progress,
   saveState,
@@ -83,10 +85,17 @@ export function WorkspaceTopBar({
             </div>
             <button
               type="button"
+              onClick={onSaveDraft}
+              className="inline-flex items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.04] px-5 py-3 text-sm font-medium uppercase tracking-[0.22em] text-slate-200 transition duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:border-cyan-300/[0.3] hover:text-cyan-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050913]"
+            >
+              Save Draft
+            </button>
+            <button
+              type="button"
               onClick={onSubmit}
               className="inline-flex items-center justify-center rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-3 text-sm font-medium uppercase tracking-[0.22em] text-slate-950 shadow-[0_0_32px_rgba(103,232,249,0.22)] transition duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:bg-cyan-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050913]"
             >
-              {workspaceProject.submitLabel}
+              Submit Work
             </button>
           </div>
         </div>

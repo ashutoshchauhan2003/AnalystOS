@@ -5,7 +5,7 @@ import { AuthForm } from "@/components/auth/auth-form";
 
 export const metadata: Metadata = {
   title: "Sign Up",
-  description: "Create a demo Analyst 3D simulation workspace for portfolio-ready analyst practice.",
+  description: "Create an AnalystOS prototype workspace for portfolio-ready analyst practice.",
   robots: {
     index: false,
     follow: false,
@@ -27,21 +27,21 @@ export default function SignUpPage() {
               className="mb-12 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-slate-300 transition hover:border-cyan-300/[0.35] hover:text-cyan-100"
             >
               <span className="flex h-9 w-9 items-center justify-center rounded-full border border-cyan-300/[0.35] bg-cyan-300/10 text-xs font-semibold tracking-[0.22em] text-cyan-200">
-                A3
+                AOS
               </span>
-              Analyst 3D
+              AnalystOS
             </Link>
 
             <p className="mb-5 text-xs font-medium uppercase tracking-[0.36em] text-cyan-200">
-              Demo Proof Of Skill
+              Prototype Proof Of Skill
             </p>
             <h1 className="max-w-xl text-5xl font-semibold tracking-[-0.04em] text-white">
-              Start inside the analyst lab.
+              Start inside AnalystOS.
             </h1>
             <p className="mt-6 max-w-lg text-base leading-8 text-slate-300">
-              Create a demo workspace for simulation-driven analysis, SQL
-              practice, project evidence, and recruiter-ready portfolio outcomes.
-              This does not create a production-secure account.
+              Create a prototype workspace for real analyst tasks, SQL practice,
+              portfolio-ready proof, and recruiter-discoverable outcomes. This
+              does not create a production-secure account.
             </p>
 
             <div className="mt-10 grid max-w-lg grid-cols-3 gap-3">
@@ -67,10 +67,10 @@ export default function SignUpPage() {
             <div className="mb-8 flex items-center justify-between">
               <div>
                 <p className="text-xs font-medium uppercase tracking-[0.3em] text-cyan-200">
-                  Demo Sign Up
+                  Sign Up
                 </p>
                 <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-white">
-                  Create demo workspace
+                  Create workspace
                 </h2>
               </div>
               <Link

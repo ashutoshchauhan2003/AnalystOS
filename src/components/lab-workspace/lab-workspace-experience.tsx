@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { PageTransition } from "@/components/motion/page-transition";
+import { labs, type Lab, type LabId } from "@/content/labs";
 import {
   initialInsightNotes,
   initialRecommendation,
@@ -18,6 +20,13 @@ import { AiAssistantPanel } from "@/components/lab-workspace/ai-assistant-panel"
 import { ProblemBriefPanel } from "@/components/lab-workspace/problem-brief-panel";
 import { WorkspaceShell } from "@/components/lab-workspace/workspace-shell";
 import { WorkspaceTopBar } from "@/components/lab-workspace/workspace-top-bar";
+import { StatusPill } from "@/components/lab-workspace/status-pill";
+import {
+  createSubmission,
+  updateSubmission,
+  type Submission,
+} from "@/data/submissions";
+import { getCurrentUserId } from "@/lib/supabase/auth";
 
 type SaveState = "synced" | "saving" | "dirty";
 type QueryResultRow = Record<string, string>;
@@ -36,6 +45,102 @@ type QueryApiResponse = {
   } | null;
 };
 
+const sqlChallengeLabs = labs;
+
+const sqlDraftByLab: Partial<Record<LabId, string>> = {
+  "sql-join-challenge": `-- AnalystOS SQL join challenge adapted to the mock cohort_accounts engine
+select
+  region,
+  segment,
+  onboarding_band,
+  sum(retained_revenue) as retained_revenue,
+  sum(prior_retained_revenue) as prior_retained_revenue,
+  sum(retained_revenue) - sum(prior_retained_revenue) as revenue_variance,
+  avg(churn_risk_score) as avg_churn_risk
+from cohort_accounts
+group by region, segment, onboarding_band
+order by revenue_variance asc;`,
+  "debugging-broken-sql-query": `-- Debug the cohort query by keeping the table, grouping, and retained revenue fields aligned
+select
+  onboarding_band,
+  segment,
+  count(*) as cohort_rows,
+  sum(retained_revenue) as retained_revenue,
+  sum(prior_retained_revenue) as prior_retained_revenue,
+  avg(churn_risk_score) as avg_churn_risk
+from cohort_accounts
+group by onboarding_band, segment
+order by avg_churn_risk desc;`,
+  "python-eda-notebook-task": `-- Notebook task warm-up: inspect onboarding risk before moving into EDA
+select
+  onboarding_band,
+  count(*) as cohort_rows,
+  sum(retained_revenue) as retained_revenue,
+  avg(churn_risk_score) as avg_churn_risk
+from cohort_accounts
+group by onboarding_band
+order by avg_churn_risk desc;`,
+  "sales-dashboard-critique": `-- Dashboard critique data cut: find the clearest executive metric hierarchy
+select
+  region,
+  segment,
+  sum(retained_revenue) as retained_revenue,
+  sum(prior_retained_revenue) as prior_retained_revenue,
+  sum(retained_revenue) - sum(prior_retained_revenue) as revenue_variance
+from cohort_accounts
+group by region, segment
+order by revenue_variance asc;`,
+  "ba-requirements-case": `-- BA requirements case support query: quantify the operational segment before writing requirements
+select
+  onboarding_band,
+  count(*) as cohort_rows,
+  sum(retained_revenue) as retained_revenue,
+  avg(churn_risk_score) as avg_churn_risk
+from cohort_accounts
+group by onboarding_band
+order by avg_churn_risk desc;`,
+  "churn-diagnostic-simulation": `-- Churn diagnostic simulation: locate the strongest retained-revenue risk pattern
+select
+  region,
+  segment,
+  onboarding_band,
+  sum(retained_revenue) as retained_revenue,
+  sum(prior_retained_revenue) as prior_retained_revenue,
+  sum(retained_revenue) - sum(prior_retained_revenue) as revenue_variance,
+  avg(churn_risk_score) as avg_churn_risk
+from cohort_accounts
+group by region, segment, onboarding_band
+order by avg_churn_risk desc;`,
+  "excel-cleaning-challenge": `-- Excel cleaning challenge support query: profile cohort quality and risk before documenting cleanup
+select
+  onboarding_band,
+  region,
+  count(*) as cohort_rows,
+  sum(retained_revenue) as retained_revenue,
+  avg(churn_risk_score) as avg_churn_risk
+from cohort_accounts
+group by onboarding_band, region
+order by cohort_rows desc;`,
+  "user-story-builder": `-- User story builder support query: quantify the affected operational cohorts
+select
+  segment,
+  onboarding_band,
+  count(*) as affected_accounts,
+  sum(retained_revenue) as retained_revenue,
+  avg(churn_risk_score) as avg_churn_risk
+from cohort_accounts
+group by segment, onboarding_band
+order by avg_churn_risk desc;`,
+};
+
+function getValidLabId(value: string | null): LabId {
+  return labs.some((lab) => lab.id === value) ? (value as LabId) : "sql-join-challenge";
+}
+
+function getInitialDraftForLab(labId: LabId) {
+  return sqlDraftByLab[labId] ?? initialSqlDraft;
+}
+
 function includesAllTerms(value: string, terms: string[]) {
   const normalized = value.toLowerCase();
   return terms.every((term) => normalized.includes(term.toLowerCase()));
@@ -47,8 +152,12 @@ function includesAnyTerm(value: string, terms: string[]) {
 }
 
 export function LabWorkspaceExperience() {
+  const searchParams = useSearchParams();
+  const initialLabId = getValidLabId(searchParams.get("challenge"));
   const [activeMode, setActiveMode] = useState<WorkspaceMode>("sql");
-  const [sqlDraft, setSqlDraft] = useState(initialSqlDraft);
+  const [selectedLabId, setSelectedLabId] = useState<LabId>(initialLabId);
+  const selectedLab = sqlChallengeLabs.find((lab) => lab.id === selectedLabId) ?? sqlChallengeLabs[0];
+  const [sqlDraft, setSqlDraft] = useState(() => getInitialDraftForLab(selectedLabId));
   const [insightNotes, setInsightNotes] = useState(initialInsightNotes);
   const [recommendation, setRecommendation] = useState(initialRecommendation);
   const [queryValidation, setQueryValidation] = useState<SimulationValidation>({
@@ -63,8 +172,16 @@ export function LabWorkspaceExperience() {
   const [recommendationEdited, setRecommendationEdited] = useState(false);
   const [assistantUsed, setAssistantUsed] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [draftSaved, setDraftSaved] = useState(false);
+  const [submittedAt, setSubmittedAt] = useState("");
+  const [currentSubmissionId, setCurrentSubmissionId] = useState("");
   const [saveState, setSaveState] = useState<SaveState>("synced");
   const [lastSavedAt, setLastSavedAt] = useState("just now");
+  const [userId, setUserId] = useState("demo-user");
+
+  useEffect(() => {
+    getCurrentUserId().then((id) => setUserId(id ?? "demo-user"));
+  }, []);
 
   const sqlHasRequiredTerms = includesAllTerms(
     sqlDraft,
@@ -267,6 +384,13 @@ export function LabWorkspaceExperience() {
     };
   }, [saveState, sqlDraft, insightNotes, recommendation]);
 
+  useEffect(() => {
+    const queryLabId = getValidLabId(searchParams.get("challenge"));
+    if (queryLabId !== selectedLabId) {
+      handleChallengeChange(queryLabId, { syncUrl: false });
+    }
+  }, [searchParams, selectedLabId]);
+
   const preview = useMemo(
     () => ({
       sqlDraft,
@@ -275,6 +399,71 @@ export function LabWorkspaceExperience() {
     }),
     [insightNotes, recommendation, sqlDraft],
   );
+
+  const handleChallengeChange = (
+    labId: LabId,
+    options: { syncUrl?: boolean } = { syncUrl: true },
+  ) => {
+    const nextLab = sqlChallengeLabs.find((lab) => lab.id === labId);
+    if (!nextLab) return;
+
+    if (options.syncUrl && typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("challenge", labId);
+      window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+    }
+
+    setSelectedLabId(labId);
+    setActiveMode("sql");
+    setSqlDraft(getInitialDraftForLab(labId));
+    setInsightNotes(`Challenge: ${nextLab.title}\n\nKey insight draft:\n`);
+    setRecommendation(`Recommendation draft for ${nextLab.title}:\n`);
+    setQueryResults([]);
+    setQueryColumns([]);
+    setReviewedScenario(true);
+    setInterpretedResults(false);
+    setInsightEdited(false);
+    setRecommendationEdited(false);
+    setSubmitted(false);
+    setSubmittedAt("");
+    setDraftSaved(false);
+    setCurrentSubmissionId("");
+    setSaveState("dirty");
+    setQueryValidation({
+      status: "idle",
+      message: `${nextLab.title} loaded. Run the SQL query against the mock cohort_accounts engine.`,
+    });
+  };
+
+  const persistSubmission = useCallback(
+    async (status: Submission["status"]) => {
+      const payload = {
+        userId,
+        labId: selectedLab.id,
+        status,
+        sqlAnswer: sqlDraft,
+        insightNote: insightNotes,
+        recommendation,
+        score: 0,
+        reviewerFeedback: "",
+      };
+      const saved = currentSubmissionId
+        ? updateSubmission(currentSubmissionId, payload)
+        : createSubmission(payload);
+      const resolved = await saved;
+
+      setCurrentSubmissionId(resolved?.id ?? "");
+      return resolved;
+    },
+    [currentSubmissionId, insightNotes, recommendation, selectedLab.id, sqlDraft, userId],
+  );
+
+  const handleSaveDraft = useCallback(async () => {
+    await persistSubmission("draft");
+    setSaveState("synced");
+    setDraftSaved(true);
+    setLastSavedAt("just now");
+  }, [persistSubmission]);
 
   const handleRunQuery = useCallback(async () => {
     setQueryValidation({
@@ -311,8 +500,14 @@ export function LabWorkspaceExperience() {
     }
   }, [sqlDraft]);
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async () => {
     setSubmitted(true);
+    setSubmittedAt(new Date().toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+    }));
+
+    const saved = await persistSubmission("submitted");
 
     if (!submissionReady) {
       setQueryValidation({
@@ -328,7 +523,9 @@ export function LabWorkspaceExperience() {
       message: "Recommendation submitted. The simulation engine marked the workflow complete.",
     });
     setActiveMode("preview");
+    setCurrentSubmissionId(saved?.id ?? "");
   }, [
+    persistSubmission,
     queryValidation.status,
     submissionReady,
   ]);
@@ -348,6 +545,8 @@ export function LabWorkspaceExperience() {
   const handleSqlDraftChange = (value: string) => {
     setSqlDraft(value);
     setSubmitted(false);
+    setSubmittedAt("");
+    setDraftSaved(false);
     setInterpretedResults(false);
     setQueryValidation({
       status: "idle",
@@ -362,6 +561,8 @@ export function LabWorkspaceExperience() {
     setInsightNotes(value);
     setInsightEdited(true);
     setSubmitted(false);
+    setSubmittedAt("");
+    setDraftSaved(false);
     setSaveState("dirty");
   };
 
@@ -369,6 +570,8 @@ export function LabWorkspaceExperience() {
     setRecommendation(value);
     setRecommendationEdited(true);
     setSubmitted(false);
+    setSubmittedAt("");
+    setDraftSaved(false);
     setSaveState("dirty");
   };
 
@@ -378,14 +581,31 @@ export function LabWorkspaceExperience() {
         <WorkspaceTopBar
           activeMode={activeMode}
           onModeChange={setActiveMode}
+          onSaveDraft={handleSaveDraft}
           onSubmit={handleSubmit}
           progress={progress}
           saveState={saveState}
           lastSavedAt={lastSavedAt}
         />
 
+        <ChallengeSelector
+          selectedLab={selectedLab}
+          labs={sqlChallengeLabs}
+          onChallengeChange={handleChallengeChange}
+        />
+
+        <PrototypeNotice
+          draftSaved={draftSaved}
+          submitted={submitted}
+          submittedAt={submittedAt}
+          submissionReady={submissionReady}
+          selectedLab={selectedLab}
+          submissionId={currentSubmissionId}
+        />
+
         <div className="grid gap-7 xl:grid-cols-[360px_minmax(0,1fr)] xl:items-start 2xl:grid-cols-[380px_minmax(0,1fr)]">
           <ProblemBriefPanel
+            selectedLab={selectedLab}
             activeMode={activeMode}
             readiness={missionReadiness}
             progress={progress}
@@ -395,6 +615,7 @@ export function LabWorkspaceExperience() {
             onStepSelect={handleStepSelect}
           />
           <AnalysisWorkArea
+            selectedLab={selectedLab}
             activeMode={activeMode}
             sqlDraft={sqlDraft}
             insightNotes={insightNotes}
@@ -423,5 +644,126 @@ export function LabWorkspaceExperience() {
         onUseAssistant={() => setAssistantUsed(true)}
       />
     </WorkspaceShell>
+  );
+}
+
+function ChallengeSelector({
+  selectedLab,
+  labs,
+  onChallengeChange,
+}: {
+  selectedLab: Lab;
+  labs: Lab[];
+  onChallengeChange: (labId: LabId) => void;
+}) {
+  return (
+    <section className="rounded-[1.6rem] border border-cyan-300/[0.14] bg-[linear-gradient(180deg,rgba(8,17,29,0.92),rgba(5,10,18,0.72))] p-4 shadow-[0_18px_54px_rgba(2,8,20,0.28),inset_0_1px_0_rgba(255,255,255,0.05)]">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">
+            Practice Challenge Selector
+          </p>
+          <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-white">
+            {selectedLab.title}
+          </h2>
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
+            {selectedLab.brief}
+          </p>
+        </div>
+
+        <label className="min-w-0 lg:w-[360px]">
+          <span className="mb-2 block text-[10px] uppercase tracking-[0.24em] text-slate-500">
+            Active challenge
+          </span>
+          <select
+            value={selectedLab.id}
+            onChange={(event) => onChallengeChange(event.target.value as LabId)}
+            className="w-full rounded-[1.1rem] border border-white/[0.1] bg-slate-950/[0.78] px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-cyan-300/[0.45] focus:ring-4 focus:ring-cyan-300/10"
+          >
+            {labs.map((lab) => (
+              <option key={lab.id} value={lab.id} className="bg-slate-950 text-slate-100">
+                {lab.title}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <div className="mt-4 grid gap-3 md:grid-cols-3">
+        <ChallengeMetric label="Role fit" value={selectedLab.role.join(" / ")} />
+        <ChallengeMetric label="Skill" value={selectedLab.skill} />
+        <ChallengeMetric label="Difficulty" value={selectedLab.difficulty} />
+        <ChallengeMetric label="Expected output" value={selectedLab.expectedOutput} />
+      </div>
+    </section>
+  );
+}
+
+function PrototypeNotice({
+  draftSaved,
+  submitted,
+  submittedAt,
+  submissionReady,
+  selectedLab,
+  submissionId,
+}: {
+  draftSaved: boolean;
+  submitted: boolean;
+  submittedAt: string;
+  submissionReady: boolean;
+  selectedLab: Lab;
+  submissionId: string;
+}) {
+  return (
+    <section className="rounded-[1.35rem] border border-cyan-300/[0.18] bg-cyan-300/[0.065] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.3em] text-cyan-100">
+            Prototype Workspace
+          </p>
+          <p className="mt-2 text-sm leading-6 text-slate-200">
+            Supabase persistence is used when configured. Without env variables, AnalystOS falls back to local prototype storage.
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <StatusPill label={selectedLab.skill} tone="cyan" />
+          <StatusPill label={draftSaved ? "Draft saved" : "Draft pending"} tone={draftSaved ? "success" : "neutral"} />
+          {submitted ? (
+            <StatusPill
+              label={submissionReady ? `Submitted ${submittedAt}` : `Submitted with gaps ${submittedAt}`}
+              tone={submissionReady ? "success" : "warning"}
+            />
+          ) : null}
+        </div>
+      </div>
+
+      {submitted ? (
+        <div className="mt-4 rounded-[1.15rem] border border-white/[0.08] bg-slate-950/[0.34] px-4 py-3">
+          <p className="text-sm font-medium text-white">Submission confirmation</p>
+          <p className="mt-2 text-sm leading-6 text-slate-300">
+            {submissionReady
+              ? `${selectedLab.title} was submitted with SQL, insight notes, recommendation, and preview evidence.`
+              : `${selectedLab.title} was saved as a submission attempt. Complete the remaining readiness checks before treating it as portfolio-ready.`}
+          </p>
+          {submissionId ? (
+            <a
+              href={`/submissions/${submissionId}`}
+              className="mt-4 inline-flex items-center justify-center rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-200"
+            >
+              View Submission
+            </a>
+          ) : null}
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
+function ChallengeMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-[1.1rem] border border-white/[0.08] bg-white/[0.035] px-4 py-3">
+      <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500">{label}</p>
+      <p className="mt-2 text-sm leading-6 text-slate-200">{value}</p>
+    </div>
   );
 }

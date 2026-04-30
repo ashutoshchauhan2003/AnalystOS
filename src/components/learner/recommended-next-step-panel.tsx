@@ -36,7 +36,7 @@ export function RecommendedNextStepPanel() {
 
           <div className="mt-8 flex flex-wrap gap-4">
             <GlowButton href="/lab">{recommendedNextStep.actionLabel}</GlowButton>
-            <GlowButton href="/course-path" variant="secondary">
+            <GlowButton href="/paths" variant="secondary">
               {recommendedNextStep.secondaryActionLabel}
             </GlowButton>
           </div>
