@@ -37,6 +37,15 @@ export function CinematicHero() {
             portfolio-ready proof, and become discoverable to recruiters.
           </p>
 
+          <div className="mt-6 max-w-3xl space-y-3">
+            <p className="rounded-2xl border border-cyan-300/[0.16] bg-cyan-300/[0.055] px-4 py-3 text-sm leading-6 text-cyan-50">
+              Built for Indian graduates preparing for Data Analyst, Business Analyst, and Data Scientist roles.
+            </p>
+            <p className="text-sm leading-6 text-slate-400">
+              Built by Ashutosh Chauhan, PGDM Business Analytics & Marketing student.
+            </p>
+          </div>
+
           <div className="mt-12 flex flex-wrap gap-4">
             <GlowButton href="/sign-up">Start Free Core</GlowButton>
             <GlowButton href="#projects" variant="secondary">

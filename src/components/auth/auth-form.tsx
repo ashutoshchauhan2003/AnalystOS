@@ -21,6 +21,12 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const isSignUp = mode === "sign-up";
 
+  function handleDemoFlow() {
+    document.cookie = `${SUPABASE_SESSION_COOKIE}=1; path=/; max-age=86400; samesite=lax`;
+    router.push("/diagnostic");
+    router.refresh();
+  }
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
@@ -72,7 +78,9 @@ export function AuthForm({ mode }: AuthFormProps) {
     <form className="space-y-5" onSubmit={handleSubmit}>
       <div className="rounded-2xl border border-cyan-300/[0.18] bg-cyan-300/[0.055] px-4 py-3 text-sm leading-6 text-cyan-50">
         {isSupabaseConfigured
-          ? "AnalystOS uses Supabase Auth for this build. Sign in or create an account to persist your session."
+          ? isSignUp
+            ? "First time here? Create a new account to save your AnalystOS progress, drafts, reviews, and portfolio."
+            : "Already created an account? Sign in to continue. First-time users should create a new account first."
           : "Supabase env variables are missing, so AnalystOS is using a local demo session fallback."}
       </div>
 
@@ -151,6 +159,14 @@ export function AuthForm({ mode }: AuthFormProps) {
           : isSignUp
             ? "Create Workspace"
             : "Enter Workspace"}
+      </button>
+
+      <button
+        type="button"
+        onClick={handleDemoFlow}
+        className="flex w-full items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.045] px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.22em] text-slate-200 transition hover:-translate-y-0.5 hover:border-cyan-300/[0.35] hover:text-cyan-100"
+      >
+        Try demo flow without account
       </button>
 
       {isSignUp ? (

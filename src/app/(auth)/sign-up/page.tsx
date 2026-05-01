@@ -5,7 +5,7 @@ import { AuthForm } from "@/components/auth/auth-form";
 
 export const metadata: Metadata = {
   title: "Sign Up",
-  description: "Create an AnalystOS prototype workspace for portfolio-ready analyst practice.",
+  description: "Create a new AnalystOS beta account for portfolio-ready analyst practice.",
   robots: {
     index: false,
     follow: false,
@@ -33,15 +33,15 @@ export default function SignUpPage() {
             </Link>
 
             <p className="mb-5 text-xs font-medium uppercase tracking-[0.36em] text-cyan-200">
-              Prototype Proof Of Skill
+              Beta Proof Of Skill
             </p>
             <h1 className="max-w-xl text-5xl font-semibold tracking-[-0.04em] text-white">
               Start inside AnalystOS.
             </h1>
             <p className="mt-6 max-w-lg text-base leading-8 text-slate-300">
-              Create a prototype workspace for real analyst tasks, SQL practice,
-              portfolio-ready proof, and recruiter-discoverable outcomes. This
-              does not create a production-secure account.
+              First-time users should create a new account here. AnalystOS will
+              guide you from diagnostic to lab work, review, portfolio proof,
+              and job-readiness signals.
             </p>
 
             <div className="mt-10 grid max-w-lg grid-cols-3 gap-3">

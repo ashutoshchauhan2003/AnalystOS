@@ -5,7 +5,7 @@ import { AuthForm } from "@/components/auth/auth-form";
 
 export const metadata: Metadata = {
   title: "Sign In",
-  description: "Enter the AnalystOS prototype workspace with credentials-based access.",
+  description: "Sign in to AnalystOS or create a new account for the beta analytics lab.",
   robots: {
     index: false,
     follow: false,
@@ -33,15 +33,15 @@ export default function SignInPage() {
             </Link>
 
             <p className="mb-5 text-xs font-medium uppercase tracking-[0.36em] text-cyan-200">
-              Prototype Workspace Access
+              Beta Workspace Access
             </p>
             <h1 className="max-w-xl text-5xl font-semibold tracking-[-0.04em] text-white">
               Return to your AnalystOS lab.
             </h1>
             <p className="mt-6 max-w-lg text-base leading-8 text-slate-300">
-              Continue the free-core job-ready analytics workspace with
-              credentials-based access. This unlocks protected practice routes,
-              but it is not production account security yet.
+              Sign in if you already created an account. If this is your first
+              visit, create a new account or try the demo flow to explore the
+              diagnostic, lab, review, portfolio, and jobs experience.
             </p>
 
             <div className="mt-10 grid max-w-lg gap-3">
@@ -66,7 +66,7 @@ export default function SignInPage() {
                   Sign In
                 </p>
                 <h2 className="mt-3 text-3xl font-semibold tracking-[-0.03em] text-white">
-                  Access workspace
+                  Access beta workspace
                 </h2>
               </div>
               <Link

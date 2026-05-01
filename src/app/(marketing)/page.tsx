@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BetaProofSection } from "@/components/marketing/beta-proof-section";
 import { FinalCtaSection } from "@/components/marketing/final-cta-section";
 import { FeaturedProjectsSection } from "@/components/marketing/featured-projects-section";
 import { HowItWorksSection } from "@/components/marketing/how-it-works-section";
@@ -25,6 +26,7 @@ export default function MarketingHomePage() {
       <PageTransition>
         <PremiumNavbar />
         <CinematicHero />
+        <BetaProofSection />
         <RoleValueSection />
         <FeaturedProjectsSection />
         <HowItWorksSection />
