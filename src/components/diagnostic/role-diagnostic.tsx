@@ -102,10 +102,10 @@ const diagnosticQuestions: DiagnosticQuestion[] = [
   },
   {
     id: "deliverable",
-    prompt: "Which portfolio artifact would you be proud to show recruiters?",
+    prompt: "Which work sample would you be proud to show?",
     options: [
       {
-        label: "SQL-backed analytics case study",
+        label: "A simple table-based business answer",
         description: "A clean problem, query evidence, charts, and recommendation.",
         scores: { "data-analyst": 3, "business-analyst": 1, "data-scientist": 1 },
         weakSkillSignals: ["Insight storytelling", "Executive recommendation"],
@@ -201,8 +201,8 @@ const diagnosticQuestions: DiagnosticQuestion[] = [
     prompt: "What outcome matters most over the next 60 days?",
     options: [
       {
-        label: "Become useful with analytics work",
-        description: "Build enough SQL, dashboard, and insight fluency to contribute.",
+        label: "Become useful with beginner-friendly practice",
+        description: "Build enough table, dashboard, and explanation skill to contribute.",
         scores: { "data-analyst": 3, "business-analyst": 1, "data-scientist": 1 },
         weakSkillSignals: ["SQL", "Dashboard critique"],
       },
@@ -271,9 +271,9 @@ const diagnosticQuestions: DiagnosticQuestion[] = [
 ];
 
 const nextActions: Record<PathId, string> = {
-  "data-analyst": "Start with the SQL Join Challenge, then publish a short evidence card.",
-  "business-analyst": "Start with the BA Requirements Case, then draft acceptance criteria for review.",
-  "data-scientist": "Start with the Python EDA Notebook Task, then summarize your first pattern findings.",
+  "data-analyst": "Start with Combine Two Tables, then save a short proof card.",
+  "business-analyst": "Start with Turn a Request Into Clear Steps, then draft simple success checks.",
+  "data-scientist": "Start with Explore Data in a Notebook, then summarize your first pattern findings.",
 };
 
 const pathTone: Record<PathId, string> = {
@@ -454,7 +454,7 @@ export function RoleDiagnostic() {
               disabled={selectedAnswer === undefined}
               className="rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-950 shadow-[0_0_32px_rgba(103,232,249,0.22)] transition hover:-translate-y-0.5 hover:bg-cyan-200 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
             >
-              {activeIndex === diagnosticQuestions.length - 1 ? "Show Result" : "Next Question"}
+              {activeIndex === diagnosticQuestions.length - 1 ? "Show My Track" : "Next Question"}
             </button>
           </div>
         </div>
@@ -482,8 +482,8 @@ export function RoleDiagnostic() {
           })}
         </div>
         <p className="mt-5 text-sm leading-6 text-slate-400">
-          Answer honestly. The diagnostic maps preference, working style, and proof goals into a
-          recommended AnalystOS path.
+          Answer honestly. The skill check maps your interests, working style, and proof goals into
+          a recommended AnalystOS learning track.
         </p>
       </aside>
     </section>
@@ -532,7 +532,7 @@ function ResultCard({
 
           <div className="mt-8 rounded-[1.5rem] border border-white/[0.08] bg-slate-950/[0.38] p-5">
             <p className="text-[11px] uppercase tracking-[0.3em] text-cyan-200/[0.72]">
-              Portfolio output
+              Your proof output
             </p>
             <p className="mt-3 text-sm leading-7 text-slate-300">{result.path.portfolioOutput}</p>
           </div>
@@ -549,7 +549,7 @@ function ResultCard({
               onClick={onReset}
               className="rounded-full border border-white/[0.12] bg-white/[0.04] px-5 py-3 text-sm font-medium uppercase tracking-[0.2em] text-slate-300 transition hover:border-cyan-300/30 hover:text-cyan-100"
             >
-              Retake Diagnostic
+              Retake Skill Check
             </button>
           </div>
         </div>
@@ -573,7 +573,7 @@ function ResultCard({
           <p className="text-sm leading-7 text-slate-300">{result.nextAction}</p>
         </Panel>
 
-        <Panel title="Suggested next labs">
+        <Panel title="Suggested next practice tasks">
           <div className="space-y-3">
             {result.suggestedLabs.map((lab) => (
               <a

@@ -1,33 +1,33 @@
 export const learnerSidebarItems = [
   { label: "Overview", href: "/dashboard", active: true },
-  { label: "Role Paths", href: "/paths" },
-  { label: "Diagnostic", href: "/diagnostic" },
-  { label: "Lab Workspace", href: "/lab" },
-  { label: "Lab Catalog", href: "/labs" },
-  { label: "Submissions", href: "/submissions" },
-  { label: "Review", href: "/review" },
-  { label: "Portfolio", href: "/portfolio" },
+  { label: "Learning Tracks", href: "/paths" },
+  { label: "Skill Check", href: "/diagnostic" },
+  { label: "Guided Workspace", href: "/lab" },
+  { label: "Practice Tasks", href: "/labs" },
+  { label: "Your Work", href: "/submissions" },
+  { label: "Feedback", href: "/review" },
+  { label: "Your Proof", href: "/portfolio" },
   { label: "Jobs", href: "/jobs" },
 ];
 
 export const learnerKpis = [
   {
-    label: "Path completion",
+    label: "Track progress",
     value: "68%",
     detail: "up 12% this month",
   },
   {
-    label: "Portfolio-ready projects",
+    label: "Proof-ready tasks",
     value: "05",
     detail: "2 under active review",
   },
   {
-    label: "Lab streak",
+    label: "Practice streak",
     value: "14d",
     detail: "consistent execution window",
   },
   {
-    label: "Recruiter visibility score",
+    label: "Proof clarity score",
     value: "91",
     detail: "high signal profile quality",
   },
@@ -39,51 +39,51 @@ export const dashboardProfile = {
   activePathId: "data-analyst",
   activePathTitle: "Data Analyst",
   activePathSummary:
-    "SQL-first analytics track focused on business questions, dashboard judgment, EDA, and recruiter-ready proof.",
+    "Beginner-friendly track focused on business questions, dashboard reading, pattern finding, and clear proof.",
   currentWeek: "Week 04",
   currentMission: "SQL joins and retention evidence",
 };
 
 export const activeLearningPath = {
-  eyebrow: "Active Learning Path",
-  title: "Data Analyst Path",
+  eyebrow: "Active Learning Track",
+  title: "Data Analyst Track",
   progressLabel: "68% complete",
   description:
-    "A structured path spanning SQL fluency, dashboard judgment, EDA, business storytelling, and portfolio publication.",
+    "A structured track spanning table work, dashboard reading, pattern finding, business writing, and proof publishing.",
   modules: [
-    { label: "SQL Foundations For Business Questions", status: "Completed", progress: 100 },
-    { label: "Dashboard Judgment", status: "In Progress", progress: 74 },
-    { label: "EDA To Insight", status: "Queued", progress: 22 },
-    { label: "Portfolio Case Study", status: "Locked", progress: 0 },
+    { label: "Table Basics For Business Questions", status: "Completed", progress: 100 },
+    { label: "Dashboard Reading", status: "In Progress", progress: 74 },
+    { label: "Find Patterns", status: "Queued", progress: 22 },
+    { label: "Your Proof Case", status: "Locked", progress: 0 },
   ],
 };
 
 export const recommendedNextStep = {
   eyebrow: "Recommended Next Step",
-  title: "Finish the churn retention lab and publish your findings snapshot.",
+  title: "Finish the customer-risk task and publish your findings snapshot.",
   description:
-    "You are one step away from converting your latest analysis into a portfolio-grade case study with recruiter-facing highlights.",
+    "You are one step away from turning your latest practice work into a clear proof card.",
   effort: "42 min focused session",
-  impact: "Unlocks portfolio visibility boost",
-  actionLabel: "Resume Lab Session",
-  secondaryActionLabel: "View Path Details",
+  impact: "Unlocks Your Proof visibility boost",
+  actionLabel: "Resume Guided Task",
+  secondaryActionLabel: "View Track Details",
 };
 
 export const recentActivity = [
   {
-    title: "Retention cohort workbook submitted",
+    title: "Customer-risk workbook submitted",
     timestamp: "18 minutes ago",
-    summary: "Uploaded workbook revision with executive summary and metric framing.",
+    summary: "Uploaded workbook revision with a simple summary and key numbers.",
   },
   {
-    title: "SQL checkpoint unlocked",
+    title: "Table practice checkpoint unlocked",
     timestamp: "Yesterday",
-    summary: "New module opened after reaching the required accuracy band on query drills.",
+    summary: "New module opened after completing the required practice checks.",
   },
   {
-    title: "Case study draft reviewed",
+    title: "Proof draft received feedback",
     timestamp: "2 days ago",
-    summary: "Feedback added around insight hierarchy, visual clarity, and recommendation structure.",
+    summary: "Feedback added around clarity, layout, and recommendation structure.",
   },
 ];
 
@@ -94,21 +94,21 @@ export const progressSummary = [
     bar: 68,
   },
   {
-    label: "Labs completed",
+    label: "Practice tasks completed",
     value: "11 / 16",
     bar: 72,
   },
   {
-    label: "Portfolio pieces published",
+    label: "Proof pieces published",
     value: "3 / 5",
     bar: 60,
   },
 ];
 
 export const overviewHighlights = [
-  "Priority focus: finish SQL for Decision Work",
-  "Best-performing skill signal: stakeholder communication",
-  "Next portfolio unlock: churn retention case study",
+  "Priority focus: finish table work for decisions",
+  "Best-performing skill: clear business communication",
+  "Next proof unlock: customer-risk case note",
 ];
 
 export const skillHeatmap = [

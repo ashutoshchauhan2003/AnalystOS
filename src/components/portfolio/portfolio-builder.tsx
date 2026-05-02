@@ -70,14 +70,14 @@ export function PortfolioBuilder() {
         <section className="mb-8 grid gap-6 lg:grid-cols-[minmax(0,0.72fr)_360px] lg:items-end">
           <div>
             <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">
-              AnalystOS Portfolio Builder
+              AnalystOS Your Proof
             </p>
             <h1 className="mt-4 max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-white lg:text-7xl">
-              Turn reviewed lab work into recruiter-ready proof.
+              Turn feedback-approved practice work into clear proof.
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300/[0.78]">
-              Curate your profile, skills, and reviewed projects into a public portfolio page.
-              Supabase persistence is used when configured, with local fallback for demo review.
+              Curate your profile, skills, and reviewed tasks into a public proof page.
+              Supabase persistence is used when configured, with local fallback for demo feedback.
             </p>
           </div>
           <GlassPanel className="p-5" glow="cyan">
@@ -96,7 +96,7 @@ export function PortfolioBuilder() {
                 onClick={() => void savePortfolio({ published: true })}
                 className="rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-950 shadow-[0_0_32px_rgba(103,232,249,0.22)] transition hover:-translate-y-0.5 hover:bg-cyan-200"
               >
-                Publish Portfolio
+                Publish Your Proof
               </button>
               {portfolio.published ? (
                 <Link
@@ -175,7 +175,7 @@ export function PortfolioBuilder() {
               </div>
             </BuilderPanel>
 
-            <BuilderPanel eyebrow="Projects Section" title="Reviewed work eligible for portfolio">
+            <BuilderPanel eyebrow="Work Section" title="Feedback-approved work eligible for Your Proof">
               <div className="space-y-3">
                 {reviewedSubmissions.map((submission) => {
                   const lab = labs.find((item) => item.id === submission.labId);
@@ -198,7 +198,7 @@ export function PortfolioBuilder() {
                           </span>
                         </div>
                         <p className="mt-3 text-sm leading-6 text-slate-400">
-                          {submission.reviewerFeedback || "Reviewed submission ready for recruiter-facing proof."}
+                          {submission.reviewerFeedback || "Feedback-approved work ready for your proof page."}
                         </p>
                       </div>
                     </label>
@@ -209,7 +209,7 @@ export function PortfolioBuilder() {
           </div>
 
           <aside className="space-y-5 xl:sticky xl:top-8 xl:self-start">
-            <BuilderPanel eyebrow="Preview Section" title="Live portfolio card">
+            <BuilderPanel eyebrow="Preview Section" title="Live proof card">
               <div className="rounded-[1.35rem] border border-cyan-300/[0.16] bg-slate-950/[0.58] p-5">
                 <p className="text-[11px] uppercase tracking-[0.28em] text-cyan-200/[0.72]">
                   {portfolio.role}
@@ -233,9 +233,9 @@ export function PortfolioBuilder() {
               </div>
             </BuilderPanel>
 
-            <BuilderPanel eyebrow="Public Link" title="Recruiter preview">
+            <BuilderPanel eyebrow="Public Link" title="Proof page preview">
               <p className="text-sm leading-7 text-slate-300">
-                Publishing makes the portfolio visible at the public demo route.
+                Publishing makes Your Proof visible at the public demo route.
               </p>
               <Link
                 href="/u/demo-user"

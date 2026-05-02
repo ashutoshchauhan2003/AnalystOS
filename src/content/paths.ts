@@ -37,34 +37,34 @@ export interface AnalystPath {
 const dataAnalystModules: PathModule[] = [
   {
     id: "da-week-01-sql-evidence",
-    title: "SQL Evidence For Business Questions",
+    title: "Answer Business Questions With Tables",
     description:
-      "Use joins, filters, and grouped analysis to turn raw tables into decision-ready outputs.",
-    skills: ["SQL", "Joins", "Aggregation", "Result validation"],
+      "Use simple filters, table connections, and groups to answer a business question.",
+    skills: ["SQL basics", "Combining tables", "Grouping results", "Checking answers"],
     labIds: ["sql-join-challenge", "debugging-broken-sql-query"],
   },
   {
     id: "da-week-02-diagnostics",
-    title: "Diagnostic Analysis And Churn Signals",
+    title: "Find Customer Risk Patterns",
     description:
-      "Diagnose concentration, compare segments, and explain where the business should act first.",
-    skills: ["Cohort analysis", "Variance analysis", "Insight writing"],
+      "Compare customer groups and explain where the team should act first.",
+    skills: ["Finding patterns", "Comparing groups", "Writing insights"],
     labIds: ["churn-diagnostic-simulation"],
   },
   {
     id: "da-week-03-dashboard-judgment",
-    title: "Dashboard Judgment And Metric Hierarchy",
+    title: "Make Dashboards Easier To Read",
     description:
-      "Evaluate dashboard quality, metric hierarchy, scanability, and stakeholder usefulness.",
-    skills: ["Power BI", "Dashboard critique", "Metric hierarchy"],
+      "Spot confusing dashboard parts and choose what should appear first.",
+    skills: ["Dashboard reading", "Choosing key numbers", "Clear layout"],
     labIds: ["sales-dashboard-critique"],
   },
   {
     id: "da-week-04-cleaning-and-eda",
-    title: "Cleaning, EDA, And Portfolio Synthesis",
+    title: "Clean Data And Explain Patterns",
     description:
-      "Prepare messy data, explore patterns, and convert the analysis into portfolio-ready evidence.",
-    skills: ["Excel", "Python", "EDA", "Business recommendation"],
+      "Prepare messy data, find patterns, and turn the result into simple proof.",
+    skills: ["Excel", "Python basics", "Finding patterns", "Recommendations"],
     labIds: ["excel-cleaning-challenge", "python-eda-notebook-task"],
   },
 ];
@@ -72,34 +72,34 @@ const dataAnalystModules: PathModule[] = [
 const businessAnalystModules: PathModule[] = [
   {
     id: "ba-week-01-problem-framing",
-    title: "Problem Framing And Stakeholder Context",
+    title: "Understand The Business Problem",
     description:
-      "Clarify business goals, users, constraints, and the decisions a solution must support.",
-    skills: ["Problem framing", "Stakeholder analysis", "Scope control"],
+      "Clarify the goal, who needs help, and what decision must be made.",
+    skills: ["Problem framing", "User needs", "Keeping scope small"],
     labIds: ["ba-requirements-case"],
   },
   {
     id: "ba-week-02-requirements-mapping",
-    title: "Requirement Mapping And Acceptance Criteria",
+    title: "Write Clear Build Steps",
     description:
-      "Write functional requirements, assumptions, acceptance criteria, and open questions.",
-    skills: ["Requirements", "Acceptance criteria", "Edge cases"],
+      "Write clear requirements, simple success checks, and open questions.",
+    skills: ["Requirements", "Success checks", "Open questions"],
     labIds: ["ba-requirements-case"],
   },
   {
     id: "ba-week-03-user-stories",
-    title: "User Stories And Delivery Backlog",
+    title: "Write User Stories",
     description:
-      "Convert stakeholder needs into release-ready user stories and prioritized scope.",
+      "Turn user needs into short stories a product team can build.",
     skills: ["User stories", "Prioritization", "Communication"],
     labIds: ["user-story-builder"],
   },
   {
     id: "ba-week-04-decision-surfaces",
-    title: "Decision Surfaces For Stakeholders",
+    title: "Make Reports Useful For Teams",
     description:
-      "Critique dashboards and reporting flows through the lens of stakeholder action.",
-    skills: ["Dashboard critique", "Metric clarity", "Executive framing"],
+      "Improve dashboards and reports so teams know what to do next.",
+    skills: ["Dashboard reading", "Clear numbers", "Business writing"],
     labIds: ["sales-dashboard-critique", "excel-cleaning-challenge"],
   },
 ];
@@ -107,34 +107,34 @@ const businessAnalystModules: PathModule[] = [
 const dataScientistModules: PathModule[] = [
   {
     id: "ds-week-01-python-eda",
-    title: "Python EDA And Data Quality",
+    title: "Explore Data With Python",
     description:
-      "Use notebooks to inspect, clean, visualize, and summarize behavioral data.",
-    skills: ["Python", "Pandas", "Data quality", "Visualization"],
+      "Use notebooks to inspect, clean, chart, and summarize data.",
+    skills: ["Python basics", "Notebook work", "Data checks", "Charts"],
     labIds: ["python-eda-notebook-task"],
   },
   {
     id: "ds-week-02-sql-validation",
-    title: "SQL Validation And Debugging",
+    title: "Check And Fix SQL Answers",
     description:
-      "Validate upstream logic and debug analytical queries before modeling.",
-    skills: ["SQL debugging", "Cohort logic", "Validation discipline"],
+      "Check that a query is correct and fix it when it is not.",
+    skills: ["Fixing SQL", "Checking logic", "Explaining fixes"],
     labIds: ["debugging-broken-sql-query", "churn-diagnostic-simulation"],
   },
   {
     id: "ds-week-03-feature-reasoning",
-    title: "Feature Reasoning And Readiness Signals",
+    title: "Choose Useful Data Clues",
     description:
-      "Translate exploratory patterns into feature ideas, cohorts, and testable hypotheses.",
-    skills: ["Feature exploration", "Segmentation", "Hypothesis framing"],
+      "Turn patterns into useful clues and simple test ideas.",
+    skills: ["Finding clues", "Grouping users", "Testing ideas"],
     labIds: ["python-eda-notebook-task", "excel-cleaning-challenge"],
   },
   {
     id: "ds-week-04-model-communication",
-    title: "Model Communication And Business Action",
+    title: "Explain Results To Non-Technical People",
     description:
-      "Explain model outputs, uncertainty, risks, and recommended interventions to non-technical users.",
-    skills: ["Model interpretation", "Experiment framing", "Stakeholder communication"],
+      "Explain results, risks, and next steps in plain language.",
+    skills: ["Explaining results", "Testing ideas", "Business communication"],
     labIds: ["user-story-builder", "churn-diagnostic-simulation"],
   },
 ];
@@ -143,25 +143,25 @@ export const analystPaths: AnalystPath[] = [
   {
     id: "data-analyst",
     title: "Data Analyst",
-    subtitle: "SQL, dashboards, Excel cleaning, and business insight for decision-ready analytics.",
+    subtitle: "Learn tables, spreadsheets, dashboards, and simple business explanations.",
     description:
-      "A practical path for learners who want to answer business questions with SQL, dashboards, EDA, and concise stakeholder-ready insights.",
+      "A practical track for beginners who want to answer business questions with tables, dashboards, and plain explanations.",
     roleFit: ["Junior Data Analyst", "Business Intelligence Analyst", "Product Analyst", "Operations Analyst"],
     skills: [
       "SQL",
-      "Data cleaning",
-      "Dashboard critique",
+      "Cleaning data",
+      "Reading dashboards",
       "Excel",
-      "EDA",
-      "Cohort analysis",
-      "Insight storytelling",
+      "Finding patterns",
+      "Comparing groups",
+      "Explaining insights",
     ],
     tools: ["SQL", "Excel", "Power BI", "Python", "Notebooks"],
     weeklyModules: dataAnalystModules,
     difficulty: "Intermediate",
     estimatedDuration: "8-10 weeks",
     portfolioOutcome:
-      "A recruiter-ready analytics portfolio with SQL evidence, a retail dashboard case, diagnostic reasoning, and a clear executive recommendation.",
+      "A proof page with table answers, a dashboard improvement task, and a clear business recommendation.",
     recommendedLabs: [
       "sql-join-challenge",
       "churn-diagnostic-simulation",
@@ -173,7 +173,7 @@ export const analystPaths: AnalystPath[] = [
     capstoneId: "retail-operations-dashboard",
     modules: dataAnalystModules,
     portfolioOutput:
-      "A recruiter-ready analytics portfolio with SQL evidence, a retail dashboard case, diagnostic reasoning, and a clear executive recommendation.",
+      "A proof page with table answers, a dashboard improvement task, and a clear business recommendation.",
     recommendedLabIds: [
       "sql-join-challenge",
       "churn-diagnostic-simulation",
@@ -186,17 +186,17 @@ export const analystPaths: AnalystPath[] = [
   {
     id: "business-analyst",
     title: "Business Analyst",
-    subtitle: "Requirements, process clarity, user stories, and stakeholder-ready delivery artifacts.",
+    subtitle: "Learn clear requirements, user stories, and simple process improvement.",
     description:
-      "A requirements and decision-support path for learners who want to clarify messy business problems and translate them into useful workflows.",
+      "A beginner-friendly track for learners who want to turn messy business requests into clear steps.",
     roleFit: ["Business Analyst", "Product Analyst", "Operations Analyst", "Implementation Analyst"],
     skills: [
       "Requirements",
-      "Stakeholder analysis",
-      "Acceptance criteria",
+      "Understanding users",
+      "Success checks",
       "User stories",
       "Process mapping",
-      "Dashboard critique",
+      "Reading dashboards",
       "Business communication",
     ],
     tools: ["Excel", "Process maps", "User stories", "Acceptance criteria", "Dashboards"],
@@ -204,7 +204,7 @@ export const analystPaths: AnalystPath[] = [
     difficulty: "Beginner",
     estimatedDuration: "6-8 weeks",
     portfolioOutcome:
-      "A business analyst requirements portfolio with stakeholder framing, user stories, process redesign, and a university placement capstone.",
+      "A proof page with requirements, user stories, process fixes, and a guided placement project.",
     recommendedLabs: [
       "ba-requirements-case",
       "user-story-builder",
@@ -215,7 +215,7 @@ export const analystPaths: AnalystPath[] = [
     capstoneId: "university-placement-process-redesign",
     modules: businessAnalystModules,
     portfolioOutput:
-      "A business analyst requirements portfolio with stakeholder framing, user stories, process redesign, and a university placement capstone.",
+      "A proof page with requirements, user stories, process fixes, and a guided placement project.",
     recommendedLabIds: [
       "ba-requirements-case",
       "user-story-builder",
@@ -227,26 +227,26 @@ export const analystPaths: AnalystPath[] = [
   {
     id: "data-scientist",
     title: "Data Scientist",
-    subtitle: "Python EDA, feature reasoning, validation, and interpretable model communication.",
+    subtitle: "Learn Python basics, data exploration, checks, and simple result explanations.",
     description:
-      "A job-ready applied analytics path for learners who want to explore data, build interpretable models, and frame experiments from evidence.",
+      "A guided track for learners who want to explore data, find patterns, and explain results clearly.",
     roleFit: ["Junior Data Scientist", "Machine Learning Analyst", "Applied Data Analyst", "Decision Scientist"],
     skills: [
       "Python",
       "Pandas",
-      "EDA",
-      "Feature exploration",
-      "SQL validation",
-      "Segmentation",
-      "Model interpretation",
-      "Experiment framing",
+      "Finding patterns",
+      "Choosing useful clues",
+      "Checking SQL",
+      "Grouping users",
+      "Explaining model results",
+      "Testing ideas",
     ],
     tools: ["Python", "Pandas", "SQL", "Notebooks", "Visualization"],
     weeklyModules: dataScientistModules,
     difficulty: "Advanced",
     estimatedDuration: "10-12 weeks",
     portfolioOutcome:
-      "A graduate placement prediction portfolio case with EDA, feature reasoning, baseline model interpretation, and intervention recommendations.",
+      "A proof page with a notebook, pattern findings, simple model explanation, and next-step recommendations.",
     recommendedLabs: [
       "python-eda-notebook-task",
       "debugging-broken-sql-query",
@@ -257,7 +257,7 @@ export const analystPaths: AnalystPath[] = [
     capstoneId: "graduate-placement-prediction-model",
     modules: dataScientistModules,
     portfolioOutput:
-      "A graduate placement prediction portfolio case with EDA, feature reasoning, baseline model interpretation, and intervention recommendations.",
+      "A proof page with a notebook, pattern findings, simple model explanation, and next-step recommendations.",
     recommendedLabIds: [
       "python-eda-notebook-task",
       "debugging-broken-sql-query",

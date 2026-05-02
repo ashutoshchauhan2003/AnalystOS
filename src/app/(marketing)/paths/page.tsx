@@ -8,9 +8,9 @@ import { GlassPanel } from "@/components/shared/glass-panel";
 import { analystPaths } from "@/content/paths";
 
 export const metadata: Metadata = {
-  title: "Role Paths",
+  title: "Learning Tracks",
   description:
-    "Explore AnalystOS role paths for Data Analyst, Business Analyst, and Data Scientist learners.",
+    "Explore beginner-friendly AnalystOS learning tracks for Data Analyst, Business Analyst, and Data Scientist learners.",
   alternates: {
     canonical: "/paths",
   },
@@ -29,14 +29,13 @@ export default function PathsPage() {
       <Container className="relative pb-24 pt-14 lg:pb-28 lg:pt-20">
         <section className="mx-auto mb-12 max-w-4xl text-center lg:mb-16">
           <div className="inline-flex items-center rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-[11px] uppercase tracking-[0.32em] text-cyan-200">
-            AnalystOS Role Paths
+            AnalystOS Learning Tracks
           </div>
           <h1 className="mt-7 text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-white lg:text-7xl">
-            Choose the analyst path that matches your next proof.
+            Choose a learning track that starts at your level.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-300/[0.78] lg:text-lg">
-            Each AnalystOS path bundles job-ready skills, weekly modules, practice labs, and a
-            portfolio outcome recruiters can inspect.
+            Each track gives you simple lessons, guided practice tasks, and proof you can show.
           </p>
         </section>
 
@@ -51,7 +50,7 @@ export default function PathsPage() {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-[11px] uppercase tracking-[0.32em] text-cyan-200/[0.72]">
-                        Path 0{index + 1}
+                        Track 0{index + 1}
                       </p>
                       <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white">
                         {path.title}
@@ -71,7 +70,7 @@ export default function PathsPage() {
 
                   <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                     <Metric label="Estimated time" value={path.estimatedDuration} />
-                    <Metric label="Weekly modules" value={`${path.weeklyModules.length} phases`} />
+                    <Metric label="Guided steps" value={`${path.weeklyModules.length} phases`} />
                   </div>
 
                   <TagGroup label="Skills" items={path.skills.slice(0, 7)} />
@@ -79,7 +78,7 @@ export default function PathsPage() {
 
                   <div className="mt-6 rounded-[1.25rem] border border-white/[0.08] bg-slate-950/[0.38] p-4">
                     <p className="text-[11px] uppercase tracking-[0.28em] text-cyan-200/[0.72]">
-                      Portfolio outcome
+                      Your proof outcome
                     </p>
                     <p className="mt-3 text-sm leading-6 text-slate-300">
                       {path.portfolioOutcome}
@@ -90,7 +89,7 @@ export default function PathsPage() {
                     href={`/paths/${path.id}`}
                     className="mt-7 inline-flex items-center justify-center rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-950 shadow-[0_0_32px_rgba(103,232,249,0.22)] transition hover:-translate-y-0.5 hover:bg-cyan-200"
                   >
-                    View Path
+                    View Track
                   </Link>
                 </div>
               </GlassPanel>

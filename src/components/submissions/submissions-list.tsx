@@ -40,13 +40,13 @@ export function SubmissionsList() {
               Dashboard
             </Link>
             <p className="mt-8 text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">
-              AnalystOS Submissions
+              AnalystOS Your Work
             </p>
             <h1 className="mt-4 max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-white lg:text-7xl">
-              Your lab evidence and review state.
+              Your practice task work and feedback state.
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300/[0.78]">
-              Supabase-backed submission history when configured. The page falls back to local prototype data if Supabase is unavailable.
+              Saved work history when configured. The page falls back to local prototype data if Supabase is unavailable.
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-3 lg:w-[520px]">
@@ -59,7 +59,7 @@ export function SubmissionsList() {
         <section className="grid gap-5 lg:grid-cols-2">
           {isLoading ? (
             <div className="rounded-[28px] border border-white/10 bg-white/[0.035] p-8 text-center text-sm text-slate-300">
-              Loading submissions...
+              Loading your work...
             </div>
           ) : null}
           {!isLoading && items.map((submission, index) => {
@@ -70,7 +70,7 @@ export function SubmissionsList() {
                   <div className="relative flex h-full flex-col">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <p className="text-[11px] uppercase tracking-[0.32em] text-cyan-200/[0.72]">
-                        {lab?.skill ?? "Lab"}
+                        {lab?.skill ?? "Practice task"}
                       </p>
                       <span className={`rounded-full border px-3 py-1 text-[10px] uppercase tracking-[0.22em] ${statusStyles[submission.status]}`}>
                         {submission.status}

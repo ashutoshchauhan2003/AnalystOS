@@ -4,6 +4,7 @@ import { DashboardOverview } from "@/components/learner/dashboard-overview";
 import { LearnerSidebar } from "@/components/learner/learner-sidebar";
 import { LearnerTopUtilityBar } from "@/components/learner/learner-top-utility-bar";
 import { RecommendedNextStepPanel } from "@/components/learner/recommended-next-step-panel";
+import { TodaysMissionPanel } from "@/components/learner/todays-mission-panel";
 import { Reveal } from "@/components/motion/reveal";
 import { GlassPanel } from "@/components/shared/glass-panel";
 import {
@@ -29,6 +30,7 @@ export function LearnerDashboardExperience() {
           <LearnerTopUtilityBar />
           <DashboardOverview />
           <DashboardKpiGrid />
+          <TodaysMissionPanel />
 
           <div className="grid gap-5 xl:grid-cols-[minmax(0,0.62fr)_minmax(360px,0.38fr)]">
             <ActiveLearningPathPanel />

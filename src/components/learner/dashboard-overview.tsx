@@ -23,14 +23,14 @@ export function DashboardOverview() {
               Your AnalystOS workspace is live.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300/[0.76]">
-              Keep moving through structured labs, sharpen your portfolio-ready proof, and turn
-              today&apos;s work into visible progress recruiters can trust.
+              Keep moving through guided practice tasks, sharpen Your Proof, and turn
+              today&apos;s work into visible progress employers can understand.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              <GlowButton href="/lab">Resume Current Lab</GlowButton>
+              <GlowButton href="/lab">Continue the Streak</GlowButton>
               <GlowButton href="/dashboard" variant="secondary">
-                View Progress
+                Check My Power Level
               </GlowButton>
             </div>
           </div>

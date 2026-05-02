@@ -21,25 +21,25 @@ export function CinematicHero() {
           transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="inline-flex items-center gap-3 rounded-full border border-cyan-300/20 bg-[linear-gradient(180deg,rgba(103,232,249,0.16),rgba(103,232,249,0.06))] px-4 py-2 text-[11px] uppercase tracking-[0.32em] text-cyan-200/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
-            AnalystOS / Free-core analytics lab
+            AnalystOS / Beginner-friendly practice OS
           </div>
 
           <h1 className="mt-10 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-white xl:text-[5.3rem]">
-            AnalystOS builds
+            Start from zero.
             <span className="block bg-[linear-gradient(180deg,#d7fbff_0%,#67e8f9_55%,#8ab4ff_100%)] bg-clip-text text-transparent">
-              job-ready proof.
+              Build job-ready proof.
             </span>
-            <span className="mt-3 block text-slate-300">Learn, practice, publish, get hired.</span>
+            <span className="mt-3 block text-slate-300">No coding required to begin.</span>
           </h1>
 
           <p className="mt-8 max-w-2xl text-lg leading-8 text-slate-300/[0.76] xl:max-w-3xl">
-            A free-core job-ready analytics lab where learners practise real analyst tasks, build
-            portfolio-ready proof, and become discoverable to recruiters.
+            A beginner-friendly learning workspace where you practise simple analyst tasks, follow
+            guided steps, and turn your work into clear proof for jobs.
           </p>
 
           <div className="mt-6 max-w-3xl space-y-3">
             <p className="rounded-2xl border border-cyan-300/[0.16] bg-cyan-300/[0.055] px-4 py-3 text-sm leading-6 text-cyan-50">
-              Built for Indian graduates preparing for Data Analyst, Business Analyst, and Data Scientist roles.
+              Start from zero. No coding required. Beginner Mode adds hints, examples, and guided steps.
             </p>
             <p className="text-sm leading-6 text-slate-400">
               Built by Ashutosh Chauhan, PGDM Business Analytics & Marketing student.
@@ -47,9 +47,9 @@ export function CinematicHero() {
           </div>
 
           <div className="mt-12 flex flex-wrap gap-4">
-            <GlowButton href="/sign-up">Start Free Core</GlowButton>
-            <GlowButton href="#projects" variant="secondary">
-              Explore Real Projects
+            <GlowButton href="/sign-up">Begin Your Comeback</GlowButton>
+            <GlowButton href="/diagnostic" variant="secondary">
+              Find My First Mission
             </GlowButton>
           </div>
 

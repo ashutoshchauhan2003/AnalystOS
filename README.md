@@ -4,6 +4,15 @@ AnalystOS is a free-core job-ready analytics lab where learners practise real an
 
 The current product is launch-demo ready: the full learner journey is implemented across diagnostics, learning paths, labs, SQL workspace, submissions, review, portfolio publishing, job matching, and recruiter discovery. Supabase persistence is integrated with graceful local fallback when environment variables are missing.
 
+## Showcase
+
+- Live Demo: https://analyst-os-roan.vercel.app/
+- GitHub Repo: https://github.com/ashutoshchauhan2003/AnalystOS
+- Product Tagline: Learn -> Practice -> Publish -> Get Hired
+- Core Flow: Diagnostic -> Learning Paths -> Labs -> Submission -> Review -> Portfolio -> Jobs
+- Tech Stack: Next.js, TypeScript, Tailwind CSS, Supabase, Vercel
+- Founder Note: Built by Ashutosh Chauhan, PGDM Business Analytics & Marketing student
+
 ## Current Live Product Status
 
 Implemented:

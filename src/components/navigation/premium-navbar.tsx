@@ -4,6 +4,7 @@ import { navItems } from "@/content/marketing-home";
 import { motion } from "framer-motion";
 import { Container } from "@/components/shared/container";
 import { GlowButton } from "@/components/shared/glow-button";
+import { BeginnerModeToggle } from "@/components/beginner-mode/beginner-mode";
 import Link from "next/link";
 
 export function PremiumNavbar() {
@@ -41,10 +42,11 @@ export function PremiumNavbar() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
+            <BeginnerModeToggle compact />
             <GlowButton href="/sign-in" variant="secondary">
               Sign In
             </GlowButton>
-            <GlowButton href="/dashboard">Open Lab</GlowButton>
+            <GlowButton href="/dashboard">Enter Mission Control</GlowButton>
           </div>
         </motion.header>
       </Container>

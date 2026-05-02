@@ -5,9 +5,9 @@ import { PremiumNavbar } from "@/components/navigation/premium-navbar";
 import { Container } from "@/components/shared/container";
 
 export const metadata: Metadata = {
-  title: "Role Diagnostic",
+  title: "Skill Check",
   description:
-    "Take the AnalystOS role diagnostic to find your best-fit Data Analyst, Business Analyst, or Data Scientist learning path.",
+    "Take the AnalystOS skill check to find your best beginner-friendly learning track.",
   alternates: {
     canonical: "/diagnostic",
   },
@@ -26,14 +26,14 @@ export default function DiagnosticPage() {
       <Container className="relative pb-24 pt-14 lg:pb-28 lg:pt-20">
         <section className="mx-auto mb-10 max-w-4xl text-center lg:mb-14">
           <div className="inline-flex items-center rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-[11px] uppercase tracking-[0.32em] text-cyan-200">
-            AnalystOS Diagnostic
+            AnalystOS Skill Check
           </div>
           <h1 className="mt-7 text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-white lg:text-7xl">
-            Find your strongest analyst path.
+            Find your best starting point.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-300/[0.78] lg:text-lg">
-            Answer a few work-style questions and AnalystOS will recommend a Data Analyst,
-            Business Analyst, or Data Scientist path with weak skills and a next action.
+            Answer a few simple questions and AnalystOS will recommend a learning track,
+            helpful skills to practise, and one next step.
           </p>
         </section>
 
@@ -44,4 +44,3 @@ export default function DiagnosticPage() {
     </main>
   );
 }
-

@@ -1,8 +1,21 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Reveal } from "@/components/motion/reveal";
 import { GlassPanel } from "@/components/shared/glass-panel";
 import { activeLearningPath } from "@/content/learner-dashboard";
+import { getPathCompletionPercent, readProgression } from "@/data/progression";
+import { getSubmissionsByUser } from "@/data/submissions";
 
 export function ActiveLearningPathPanel() {
+  const [completion, setCompletion] = useState(68);
+
+  useEffect(() => {
+    getSubmissionsByUser("demo-user").then((submissions) => {
+      setCompletion(getPathCompletionPercent(submissions, readProgression()));
+    });
+  }, []);
+
   return (
     <Reveal>
       <GlassPanel
@@ -23,8 +36,15 @@ export function ActiveLearningPathPanel() {
             </p>
           </div>
           <div className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-sm text-cyan-100">
-            {activeLearningPath.progressLabel}
+            {completion}% complete
           </div>
+        </div>
+
+        <div className="mt-6 h-3 overflow-hidden rounded-full bg-white/[0.07]">
+          <div
+            className="h-full rounded-full bg-[linear-gradient(90deg,rgba(103,232,249,0.95),rgba(59,130,246,0.75))] shadow-[0_0_18px_rgba(103,232,249,0.25)]"
+            style={{ width: `${completion}%` }}
+          />
         </div>
 
         <div className="mt-8 space-y-4">

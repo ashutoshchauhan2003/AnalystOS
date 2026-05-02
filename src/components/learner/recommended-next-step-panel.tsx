@@ -1,9 +1,27 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Reveal } from "@/components/motion/reveal";
 import { GlassPanel } from "@/components/shared/glass-panel";
 import { GlowButton } from "@/components/shared/glow-button";
 import { recommendedNextStep } from "@/content/learner-dashboard";
+import { getNextMission, labRewards, readProgression, type ProgressionState } from "@/data/progression";
 
 export function RecommendedNextStepPanel() {
+  const [progression, setProgression] = useState<ProgressionState | null>(null);
+
+  useEffect(() => {
+    setProgression(readProgression());
+  }, []);
+
+  const nextMission = progression ? getNextMission(progression) : null;
+  const title = nextMission
+    ? `Chase your next unlock: ${nextMission.title}.`
+    : recommendedNextStep.title;
+  const description = nextMission
+    ? `${nextMission.brief} Complete it to earn +${labRewards[nextMission.id]} XP and move closer to Job Ready.`
+    : recommendedNextStep.description;
+
   return (
     <Reveal delay={0.08}>
       <GlassPanel
@@ -17,27 +35,31 @@ export function RecommendedNextStepPanel() {
             {recommendedNextStep.eyebrow}
           </p>
           <h2 className="mt-5 text-2xl font-semibold leading-[1.12] tracking-[-0.03em] text-white">
-            {recommendedNextStep.title}
+            {title}
           </h2>
           <p className="mt-5 text-base leading-8 text-slate-300/[0.76]">
-            {recommendedNextStep.description}
+            {description}
           </p>
 
           <div className="mt-7 grid gap-3">
             <div className="rounded-[1.2rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
               <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500">Effort</p>
-              <p className="mt-2 text-base text-white">{recommendedNextStep.effort}</p>
+              <p className="mt-2 text-base text-white">{nextMission?.estimatedTime ?? recommendedNextStep.effort}</p>
             </div>
             <div className="rounded-[1.2rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
               <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500">Impact</p>
-              <p className="mt-2 text-base text-white">{recommendedNextStep.impact}</p>
+              <p className="mt-2 text-base text-white">
+                {nextMission ? `+${labRewards[nextMission.id]} XP and next unlock progress` : recommendedNextStep.impact}
+              </p>
             </div>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <GlowButton href="/lab">{recommendedNextStep.actionLabel}</GlowButton>
+            <GlowButton href={nextMission ? `/lab?challenge=${nextMission.id}` : "/lab"}>
+              {nextMission ? "Chase This Mission" : recommendedNextStep.actionLabel}
+            </GlowButton>
             <GlowButton href="/paths" variant="secondary">
-              {recommendedNextStep.secondaryActionLabel}
+              See Your Track
             </GlowButton>
           </div>
         </div>

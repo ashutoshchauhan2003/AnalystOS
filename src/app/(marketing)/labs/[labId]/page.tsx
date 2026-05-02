@@ -8,6 +8,7 @@ import { Container } from "@/components/shared/container";
 import { GlassPanel } from "@/components/shared/glass-panel";
 import { labs, type LabId } from "@/content/labs";
 import { rubrics } from "@/content/rubrics";
+import { labRewards } from "@/data/progression";
 
 type LabDetailPageProps = {
   params: {
@@ -31,7 +32,7 @@ export function generateMetadata({ params }: LabDetailPageProps): Metadata {
   }
 
   return {
-    title: `${lab.title} Lab`,
+    title: `${lab.title} Mission`,
     description: `${lab.title} in AnalystOS: ${lab.brief}`,
     alternates: {
       canonical: `/labs/${lab.id}`,
@@ -65,10 +66,10 @@ export default function LabDetailPage({ params }: LabDetailPageProps) {
                 href="/labs"
                 className="inline-flex items-center rounded-full border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-[11px] uppercase tracking-[0.28em] text-slate-300 transition hover:border-cyan-300/30 hover:text-cyan-100"
               >
-                Back to labs
+                Back to missions
               </Link>
               <p className="mt-8 text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">
-                AnalystOS Lab / {lab.skill}
+                AnalystOS Mission / {lab.skill}
               </p>
               <h1 className="mt-5 max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-white lg:text-7xl">
                 {lab.title}
@@ -84,12 +85,13 @@ export default function LabDetailPage({ params }: LabDetailPageProps) {
               <div className="relative grid gap-3">
                 <SummaryMetric label="Difficulty" value={lab.difficulty} />
                 <SummaryMetric label="Estimated time" value={lab.estimatedTime} />
+                <SummaryMetric label="Reward" value={`+${labRewards[lab.id]} XP`} />
                 <SummaryMetric label="Role fit" value={lab.role.join(" / ")} />
                 <Link
                   href={`/lab?challenge=${lab.id}`}
                   className="mt-2 inline-flex items-center justify-center rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-950 shadow-[0_0_32px_rgba(103,232,249,0.22)] transition hover:-translate-y-0.5 hover:bg-cyan-200"
                 >
-                  Open Workspace
+                  Accept Mission
                 </Link>
               </div>
             </GlassPanel>
@@ -99,14 +101,14 @@ export default function LabDetailPage({ params }: LabDetailPageProps) {
         <section className="mt-12 grid gap-5 xl:grid-cols-[minmax(0,0.64fr)_minmax(360px,0.36fr)]">
           <div className="space-y-5">
             <InfoPanel
-              eyebrow="Problem Brief"
+              eyebrow="Mission Brief"
               title="What you need to solve"
               description={lab.brief}
             >
               <div className="grid gap-3 md:grid-cols-2">
                 {lab.role.map((role) => (
                   <div key={role} className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-4">
-                    <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500">Role signal</p>
+                    <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500">Best fit</p>
                     <p className="mt-2 text-base font-medium text-white">{role}</p>
                   </div>
                 ))}
@@ -114,8 +116,8 @@ export default function LabDetailPage({ params }: LabDetailPageProps) {
             </InfoPanel>
 
             <InfoPanel
-              eyebrow="Dataset Description"
-              title="Working data context"
+              eyebrow="Data You Will Use"
+              title="What information you get"
               description={lab.datasetDescription}
             >
               <div className="flex flex-wrap gap-2">
@@ -131,9 +133,9 @@ export default function LabDetailPage({ params }: LabDetailPageProps) {
             </InfoPanel>
 
             <InfoPanel
-              eyebrow="Instructions"
-              title="Complete the workbench steps"
-              description="Work through the lab as if you are preparing evidence for a real stakeholder review."
+              eyebrow="Guided Steps"
+              title="Follow Step 1 to Step 5"
+              description="Use these beginner-friendly steps before you accept the mission."
             >
               <div className="space-y-3">
                 {getInstructions(lab.id).map((instruction, index) => (
@@ -142,7 +144,7 @@ export default function LabDetailPage({ params }: LabDetailPageProps) {
                     className="flex gap-4 rounded-[1.2rem] border border-white/[0.08] bg-slate-950/[0.34] px-4 py-4"
                   >
                     <span className="text-[10px] uppercase tracking-[0.28em] text-cyan-200/[0.72]">
-                      0{index + 1}
+                      Step {index + 1}
                     </span>
                     <p className="text-sm leading-6 text-slate-300">{instruction}</p>
                   </div>
@@ -151,8 +153,8 @@ export default function LabDetailPage({ params }: LabDetailPageProps) {
             </InfoPanel>
 
             <InfoPanel
-              eyebrow="Expected Output"
-              title="What your submission should contain"
+              eyebrow="What You Will Create"
+              title="What your work should contain"
               description={lab.expectedOutput}
             >
               <div className="grid gap-3 md:grid-cols-2">
@@ -168,7 +170,7 @@ export default function LabDetailPage({ params }: LabDetailPageProps) {
             </InfoPanel>
 
             <InfoPanel
-              eyebrow="Starter Prompt"
+              eyebrow="Starter Question"
               title="Use this to begin"
               description={lab.starterPrompt}
             >
@@ -176,7 +178,7 @@ export default function LabDetailPage({ params }: LabDetailPageProps) {
                 href={`/lab?challenge=${lab.id}`}
                 className="inline-flex items-center justify-center rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-950 shadow-[0_0_32px_rgba(103,232,249,0.22)] transition hover:-translate-y-0.5 hover:bg-cyan-200"
               >
-                Open Workspace
+                Accept Mission
               </Link>
             </InfoPanel>
           </div>
@@ -188,7 +190,7 @@ export default function LabDetailPage({ params }: LabDetailPageProps) {
                   <div className="relative">
                     <div className="mb-5 h-px w-20 bg-gradient-to-r from-cyan-300/70 to-transparent" />
                     <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">
-                      Rubric
+                      Feedback Guide
                     </p>
                     <h2 className="mt-4 text-2xl font-semibold tracking-[-0.03em] text-white">
                       {rubric.title}
@@ -196,7 +198,7 @@ export default function LabDetailPage({ params }: LabDetailPageProps) {
                     <p className="mt-3 text-sm leading-7 text-slate-300/[0.78]">{rubric.description}</p>
                     <div className="mt-5 rounded-[1.15rem] border border-cyan-300/[0.18] bg-cyan-300/[0.08] px-4 py-3">
                       <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-200/[0.72]">
-                        Passing level
+                      Ready when
                       </p>
                       <p className="mt-2 text-sm font-medium text-cyan-50">{rubric.passingLevel}</p>
                     </div>
@@ -223,19 +225,19 @@ export default function LabDetailPage({ params }: LabDetailPageProps) {
               <GlassPanel className="p-6" glow="cyan">
                 <div className="relative">
                   <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">
-                    Practice Workflow
+                    Guided Demo Flow
                   </p>
                   <h2 className="mt-4 text-2xl font-semibold tracking-[-0.03em] text-white">
-                    Continue in the workspace.
+                    Continue with step-by-step help.
                   </h2>
                   <p className="mt-3 text-sm leading-7 text-slate-300/[0.78]">
-                    The workspace keeps the SQL editor, insight notes, recommendation draft, and preview tabs together for this challenge.
+                    The workspace keeps your answer area, notes, recommendation draft, and preview together for this practice task.
                   </p>
                   <Link
                     href={`/lab?challenge=${lab.id}`}
                     className="mt-6 inline-flex w-full items-center justify-center rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-950 shadow-[0_0_32px_rgba(103,232,249,0.22)] transition hover:-translate-y-0.5 hover:bg-cyan-200"
                   >
-                    Open Workspace
+                    Accept Mission
                   </Link>
                 </div>
               </GlassPanel>
@@ -257,10 +259,16 @@ function getInstructions(labId: LabId) {
   const lab = getLab(labId);
 
   return lab?.instructions.length
-    ? lab.instructions
+    ? [
+        ...lab.instructions,
+        "Save your work and explain your answer in simple language.",
+      ].slice(0, 5)
     : [
         "Read the problem brief and identify the core business question.",
         "Use the dataset context to decide what evidence is needed before writing the final answer.",
+        "Write your answer with one clear finding.",
+        "Add one recommendation the team can act on.",
+        "Save your work and explain your answer in simple language.",
       ];
 }
 

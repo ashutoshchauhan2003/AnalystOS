@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DashboardEntryTransition } from "@/components/dashboard/dashboard-entry-transition";
 import { LearnerDashboardExperience } from "@/components/learner/learner-dashboard-experience";
 
 export const metadata: Metadata = {
@@ -12,5 +13,9 @@ export const metadata: Metadata = {
 };
 
 export default function LearnerDashboardPage() {
-  return <LearnerDashboardExperience />;
+  return (
+    <DashboardEntryTransition>
+      <LearnerDashboardExperience />
+    </DashboardEntryTransition>
+  );
 }

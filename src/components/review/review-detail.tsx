@@ -9,6 +9,7 @@ import {
   updateSubmission,
   type Submission,
 } from "@/data/submissions";
+import { awardXp, XP_REWARDS, type XpAward } from "@/data/progression";
 
 const criteria = [
   "Problem framing",
@@ -27,6 +28,7 @@ export function ReviewDetail({ submissionId }: { submissionId: string }) {
   const [feedback, setFeedback] = useState("");
   const [saved, setSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [xpFeedback, setXpFeedback] = useState<XpAward | null>(null);
 
   useEffect(() => {
     getSubmissionById(submissionId).then((item) => {
@@ -67,6 +69,11 @@ export function ReviewDetail({ submissionId }: { submissionId: string }) {
     });
     if (updated) {
       setSubmission(updated);
+      setXpFeedback(
+        awardXp(`review:${submissionId}`, XP_REWARDS.review, "Feedback completed", {
+          reviewedSubmissionId: submissionId,
+        }),
+      );
     }
     setSaved(true);
   }
@@ -80,13 +87,13 @@ export function ReviewDetail({ submissionId }: { submissionId: string }) {
             Back to review queue
           </Link>
           <p className="mt-8 text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">
-            Reviewer Interface
+            Feedback Interface
           </p>
           <h1 className="mt-4 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-white lg:text-7xl">
             {lab?.title ?? submission.labId}
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-8 text-slate-300/[0.78]">
-            Supabase-backed review when configured, with local prototype fallback if Supabase is unavailable.
+            Supabase-backed feedback when configured, with local prototype fallback if Supabase is unavailable.
           </p>
         </section>
 
@@ -102,7 +109,7 @@ export function ReviewDetail({ submissionId }: { submissionId: string }) {
           <GlassPanel className="p-6" glow="cyan">
             <div className="relative">
               <p className="text-[11px] uppercase tracking-[0.3em] text-cyan-200/[0.72]">
-                Rubric Scoring
+                Feedback Scoring
               </p>
               <div className="mt-5 space-y-4">
                 {criteria.map((criterion) => (
@@ -130,7 +137,7 @@ export function ReviewDetail({ submissionId }: { submissionId: string }) {
 
               <label className="mt-5 block">
                 <span className="text-[11px] uppercase tracking-[0.3em] text-cyan-200/[0.72]">
-                  Feedback
+                  Feedback that helps them level up
                 </span>
                 <textarea
                   value={feedback}
@@ -149,12 +156,23 @@ export function ReviewDetail({ submissionId }: { submissionId: string }) {
                 onClick={submitReview}
                 className="mt-5 w-full rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-950 shadow-[0_0_32px_rgba(103,232,249,0.22)] transition hover:-translate-y-0.5 hover:bg-cyan-200"
               >
-                Submit Review
+                Submit Feedback
               </button>
               {saved ? (
                 <Link href={`/submissions/${submission.id}`} className="mt-4 inline-flex text-sm text-emerald-200">
-                  Review submitted. View submission.
+                  Feedback submitted. View work.
                 </Link>
+              ) : null}
+              {xpFeedback ? (
+                <div className="mt-4 rounded-[1.15rem] border border-emerald-300/[0.18] bg-emerald-300/[0.08] p-4">
+                  <p className="text-[10px] uppercase tracking-[0.24em] text-emerald-100">XP earned</p>
+                  <p className="mt-2 text-2xl font-semibold text-white">
+                    +{xpFeedback.xp} XP / {xpFeedback.level}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-slate-300">
+                    Feedback keeps the learning loop alive.
+                  </p>
+                </div>
               ) : null}
             </div>
           </GlassPanel>

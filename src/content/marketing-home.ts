@@ -1,11 +1,11 @@
 export const navItems = [
   { label: "Platform", href: "/#platform" },
-  { label: "Paths", href: "/paths" },
-  { label: "Labs", href: "/labs" },
+  { label: "Learning Tracks", href: "/paths" },
+  { label: "Practice Tasks", href: "/labs" },
   { label: "Jobs", href: "/jobs" },
   { label: "Recruiters", href: "/recruiters" },
   { label: "Projects", href: "/#projects" },
-  { label: "Diagnostic", href: "/diagnostic" },
+  { label: "Skill Check", href: "/diagnostic" },
   { label: "Roadmap", href: "/roadmap" },
   { label: "Flow", href: "/#flow" },
   { label: "Outcomes", href: "/#outcomes" },
@@ -13,53 +13,53 @@ export const navItems = [
 ];
 
 export const heroMetrics = [
-  { label: "Job-ready analyst tracks", value: "12" },
-  { label: "Portfolio-grade projects", value: "48" },
-  { label: "Workflow simulations", value: "Live" },
+  { label: "Beginner learning tracks", value: "12" },
+  { label: "Practice tasks", value: "48" },
+  { label: "Guided demo flow", value: "Live" },
 ];
 
 export const rolePanels = [
   {
     eyebrow: "For Analysts",
-    title: "Train inside AnalystOS on business problems that feel like the work itself.",
+    title: "Start from zero and practise simple business tasks with guidance.",
     description:
-      "Move beyond lectures into guided analysis labs, decision frameworks, and presentation-ready deliverables that mirror modern analyst teams.",
-    bullets: ["Structured learning arcs", "Portfolio-quality outputs", "Decision-making reps"],
+      "Move beyond lectures into beginner-friendly practice tasks with hints, examples, and clear steps.",
+    bullets: ["Start from zero", "No coding required at first", "Step-by-step practice"],
   },
   {
     eyebrow: "For Learners",
-    title: "Turn progress into visible proof with polished case studies and measurable growth.",
+    title: "Turn each small practice win into proof you can show.",
     description:
-      "Every AnalystOS path leads into practice, publishable artifacts, and a profile that shows how you think, not just what you watched.",
-    bullets: ["Progress intelligence", "Review-ready submissions", "Public skill showcase"],
+      "Every learning track leads into guided practice, saved work, and a profile that explains what you can do in plain language.",
+    bullets: ["Simple progress view", "Feedback-ready work", "Public proof page"],
   },
   {
     eyebrow: "For Recruiters",
-    title: "Evaluate candidates through signal-rich work, skills, and business impact.",
+    title: "See real work samples without decoding confusing jargon.",
     description:
-      "Browse AnalystOS portfolios, compare project depth, and shortlist candidates using evidence grounded in real workflow execution.",
-    bullets: ["Outcome-focused previews", "Skill-tag filters", "Shortlist workflow"],
+      "Browse learner proof pages, compare beginner-to-job-ready progress, and shortlist candidates using clear evidence.",
+    bullets: ["Clear work previews", "Simple skill filters", "Shortlist workflow"],
   },
 ];
 
 export const featuredProjects = [
   {
-    title: "Revenue Leak Investigation",
-    problem: "Diagnose why a subscription product is losing expansion revenue after onboarding.",
+    title: "Find Where Revenue Is Dropping",
+    problem: "Look at simple customer data and explain where money is being lost.",
     tools: ["SQL", "Spreadsheet Modeling", "Presentation"],
     impact: "+14% expansion recovery scenario",
     relevance: "Product Analyst",
   },
   {
-    title: "Supply Chain Volatility Model",
-    problem: "Prioritize inventory interventions using uncertainty bands across regions and vendors.",
+    title: "Spot Stock Problems",
+    problem: "Find which products or regions need attention first.",
     tools: ["Python", "Forecasting", "Dashboarding"],
     impact: "-9 days planning lag",
     relevance: "Operations Analyst",
   },
   {
-    title: "Customer Segmentation Rebuild",
-    problem: "Redesign stale lifecycle segments using behavioral clustering and retention signals.",
+    title: "Group Customers Clearly",
+    problem: "Group customers by behavior so a team can decide what to do next.",
     tools: ["SQL", "BI", "Experiment Design"],
     impact: "+11% retention uplift hypothesis",
     relevance: "Growth Analyst",
@@ -71,25 +71,25 @@ export const workflowSteps = [
     step: "01",
     title: "Learn",
     description:
-      "Absorb analyst frameworks through guided modules, real company context, and strategic reasoning prompts.",
+      "Start from zero with simple lessons, plain examples, and guided practice.",
   },
   {
     step: "02",
     title: "Practice",
     description:
-      "Work inside scenario-driven labs with feedback rails, deliverable structure, and focused constraints.",
+      "Complete practice tasks with hints, examples, and a clear Step 1 to Step 5 path.",
   },
   {
     step: "03",
     title: "Publish",
     description:
-      "Convert project work into polished case studies, metrics snapshots, and recruiter-friendly narratives.",
+      "Turn your work into a clean proof page that explains what you did and why it matters.",
   },
   {
     step: "04",
     title: "Get Hired",
     description:
-      "Surface your strongest work to employers through portfolios, searchable skills, and shortlist-ready profiles.",
+      "Share your proof with employers through simple skills, saved work, and clear feedback.",
   },
 ];
 
@@ -121,15 +121,15 @@ export const pricingTiers = [
     name: "Core",
     price: "Free",
     cadence: "",
-    description: "For learners building their first serious analyst portfolio.",
-    features: ["Guided learning paths", "Portfolio project access", "Profile publishing"],
+    description: "For beginners starting from zero.",
+    features: ["Guided learning tracks", "Practice task access", "Your Proof publishing"],
   },
   {
     name: "Pro",
     price: "$89",
     cadence: "/month",
-    description: "For ambitious candidates who want deeper labs and richer feedback.",
-    features: ["Advanced labs", "Submission review workflow", "Premium case study templates"],
+    description: "For learners who want deeper practice and richer feedback.",
+    features: ["Advanced practice tasks", "Your Work feedback flow", "Premium proof templates"],
     featured: true,
   },
   {

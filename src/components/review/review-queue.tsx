@@ -27,13 +27,13 @@ export function ReviewQueue() {
             Dashboard
           </Link>
           <p className="mt-8 text-[11px] uppercase tracking-[0.34em] text-cyan-200/[0.72]">
-            Prototype Review Queue
+            Prototype Feedback Queue
           </p>
           <h1 className="mt-4 max-w-5xl text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-white lg:text-7xl">
-            Submitted work waiting for review.
+            Submitted work waiting for feedback.
           </h1>
           <p className="mt-6 max-w-3xl text-base leading-8 text-slate-300/[0.78]">
-            Supabase-backed review queue when configured, with local prototype data as a fallback.
+            Supabase-backed feedback queue when configured, with local prototype data as a fallback.
           </p>
         </section>
 
@@ -45,7 +45,7 @@ export function ReviewQueue() {
                 <div className="relative">
                   <div className="flex items-center justify-between gap-3">
                     <p className="text-[11px] uppercase tracking-[0.3em] text-cyan-200/[0.72]">
-                      {lab?.skill ?? "Submission"}
+                      {lab?.skill ?? "Work item"}
                     </p>
                     <span className="rounded-full border border-cyan-300/[0.22] bg-cyan-300/[0.08] px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-cyan-100">
                       submitted
@@ -64,7 +64,7 @@ export function ReviewQueue() {
                     href={`/review/${submission.id}`}
                     className="mt-7 inline-flex items-center justify-center rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-950 shadow-[0_0_32px_rgba(103,232,249,0.22)] transition hover:-translate-y-0.5 hover:bg-cyan-200"
                   >
-                    Review
+                    Give Feedback
                   </Link>
                 </div>
               </GlassPanel>

@@ -5,9 +5,9 @@ import { PremiumNavbar } from "@/components/navigation/premium-navbar";
 import { Container } from "@/components/shared/container";
 
 export const metadata: Metadata = {
-  title: "Labs",
+  title: "Missions",
   description:
-    "Browse AnalystOS practice labs by role, skill, and difficulty across SQL, Python, requirements, dashboards, and communication.",
+    "Browse beginner-friendly AnalystOS missions by role, skill, difficulty, and XP reward.",
   alternates: {
     canonical: "/labs",
   },
@@ -26,14 +26,13 @@ export default function LabsPage() {
       <Container className="relative pb-24 pt-14 lg:pb-28 lg:pt-20">
         <section className="mx-auto mb-10 max-w-4xl text-center lg:mb-14">
           <div className="inline-flex items-center rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-2 text-[11px] uppercase tracking-[0.32em] text-cyan-200">
-            AnalystOS Labs
+            AnalystOS Missions
           </div>
           <h1 className="mt-7 text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-white lg:text-7xl">
-            Practice labs built for job-ready proof.
+            Choose a mission. Earn XP. Unlock the next challenge.
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-300/[0.78] lg:text-lg">
-            Filter AnalystOS labs by role, skill, and difficulty. Each lab is structured around a
-            real work artifact you can turn into portfolio evidence.
+            Start from zero with guided missions, hints, examples, XP rewards, and work you can turn into proof.
           </p>
         </section>
 
@@ -44,4 +43,3 @@ export default function LabsPage() {
     </main>
   );
 }
-

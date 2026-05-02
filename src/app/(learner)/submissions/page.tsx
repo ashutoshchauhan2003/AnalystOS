@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { SubmissionsList } from "@/components/submissions/submissions-list";
 
 export const metadata: Metadata = {
-  title: "Submissions",
-  description: "Learner submission history for AnalystOS labs and reviewer feedback.",
+  title: "Your Work",
+  description: "Learner work history for AnalystOS practice tasks and feedback.",
   robots: {
     index: false,
     follow: false,

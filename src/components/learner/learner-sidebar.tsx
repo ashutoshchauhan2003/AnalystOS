@@ -24,9 +24,9 @@ export function LearnerSidebar() {
 
         <div className="mt-8 rounded-[1.5rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.025))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
           <p className="text-[11px] uppercase tracking-[0.34em] text-cyan-200/70">Live Mode</p>
-          <p className="mt-3 text-lg font-medium text-white">Structured analyst training</p>
+          <p className="mt-3 text-lg font-medium text-white">Guided beginner training</p>
           <p className="mt-2 text-sm leading-6 text-slate-400">
-            Priority flow: learn, execute, publish, and strengthen hiring signal.
+            Priority flow: learn, practise, get feedback, and publish proof.
           </p>
         </div>
 
@@ -53,9 +53,9 @@ export function LearnerSidebar() {
 
       <div className="rounded-[1.5rem] border border-white/[0.08] bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
         <p className="text-[11px] uppercase tracking-[0.32em] text-cyan-200/70">Current Focus</p>
-        <p className="mt-3 text-base text-white">Churn Retention Lab</p>
+        <p className="mt-3 text-base text-white">Customer-Risk Practice Task</p>
         <p className="mt-2 text-sm leading-6 text-slate-400">
-          Finalize your SQL findings and turn them into a publishable decision memo.
+          Finalize your findings and turn them into a clear proof note.
         </p>
       </div>
     </GlassPanel>

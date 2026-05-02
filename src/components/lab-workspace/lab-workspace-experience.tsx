@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 import { PageTransition } from "@/components/motion/page-transition";
+import { BeginnerModeToggle, useBeginnerMode } from "@/components/beginner-mode/beginner-mode";
 import { labs, type Lab, type LabId } from "@/content/labs";
 import {
   initialInsightNotes,
@@ -21,6 +22,16 @@ import { ProblemBriefPanel } from "@/components/lab-workspace/problem-brief-pane
 import { WorkspaceShell } from "@/components/lab-workspace/workspace-shell";
 import { WorkspaceTopBar } from "@/components/lab-workspace/workspace-top-bar";
 import { StatusPill } from "@/components/lab-workspace/status-pill";
+import {
+  awardXp,
+  getLockedReason,
+  getNextMission,
+  isLabUnlocked,
+  readProgression,
+  XP_REWARDS,
+  type ProgressionState,
+  type XpAward,
+} from "@/data/progression";
 import {
   createSubmission,
   updateSubmission,
@@ -153,6 +164,7 @@ function includesAnyTerm(value: string, terms: string[]) {
 
 export function LabWorkspaceExperience() {
   const searchParams = useSearchParams();
+  const { enabled: beginnerMode } = useBeginnerMode();
   const initialLabId = getValidLabId(searchParams.get("challenge"));
   const [activeMode, setActiveMode] = useState<WorkspaceMode>("sql");
   const [selectedLabId, setSelectedLabId] = useState<LabId>(initialLabId);
@@ -178,10 +190,22 @@ export function LabWorkspaceExperience() {
   const [saveState, setSaveState] = useState<SaveState>("synced");
   const [lastSavedAt, setLastSavedAt] = useState("just now");
   const [userId, setUserId] = useState("demo-user");
+  const [xpFeedback, setXpFeedback] = useState<XpAward | null>(null);
+  const [progression, setProgression] = useState<ProgressionState | null>(null);
 
   useEffect(() => {
     getCurrentUserId().then((id) => setUserId(id ?? "demo-user"));
+    setProgression(readProgression());
   }, []);
+
+  useEffect(() => {
+    if (!progression || isLabUnlocked(selectedLab, progression)) return;
+
+    const nextMission = getNextMission(progression);
+    if (nextMission) {
+      handleChallengeChange(nextMission.id);
+    }
+  }, [progression, selectedLab]);
 
   const sqlHasRequiredTerms = includesAllTerms(
     sqlDraft,
@@ -406,6 +430,8 @@ export function LabWorkspaceExperience() {
   ) => {
     const nextLab = sqlChallengeLabs.find((lab) => lab.id === labId);
     if (!nextLab) return;
+    const currentProgression = readProgression();
+    if (!isLabUnlocked(nextLab, currentProgression)) return;
 
     if (options.syncUrl && typeof window !== "undefined") {
       const url = new URL(window.location.href);
@@ -428,6 +454,7 @@ export function LabWorkspaceExperience() {
     setSubmittedAt("");
     setDraftSaved(false);
     setCurrentSubmissionId("");
+    setXpFeedback(null);
     setSaveState("dirty");
     setQueryValidation({
       status: "idle",
@@ -508,8 +535,15 @@ export function LabWorkspaceExperience() {
     }));
 
     const saved = await persistSubmission("submitted");
+    const submitAward = awardXp(
+      `submit-work:${selectedLab.id}:${saved?.id ?? "local"}`,
+      XP_REWARDS.submitWork,
+      "Work submitted",
+      { submittedLabId: selectedLab.id },
+    );
 
     if (!submissionReady) {
+      setXpFeedback(submitAward);
       setQueryValidation({
         status: queryValidation.status,
         message:
@@ -524,9 +558,24 @@ export function LabWorkspaceExperience() {
     });
     setActiveMode("preview");
     setCurrentSubmissionId(saved?.id ?? "");
+    const completeAward = awardXp(
+      `complete-lab:${selectedLab.id}`,
+      XP_REWARDS.completeLab,
+      "Mission complete",
+      { completedLabId: selectedLab.id },
+    );
+    setXpFeedback({
+      xp: submitAward.xp + completeAward.xp,
+      reason: "Mission submitted and completed",
+      level: completeAward.level,
+      unlockedLabs: [...submitAward.unlockedLabs, ...completeAward.unlockedLabs],
+      nextMission: completeAward.nextMission,
+    });
+    setProgression(readProgression());
   }, [
     persistSubmission,
     queryValidation.status,
+    selectedLab.id,
     submissionReady,
   ]);
 
@@ -591,8 +640,11 @@ export function LabWorkspaceExperience() {
         <ChallengeSelector
           selectedLab={selectedLab}
           labs={sqlChallengeLabs}
+          progression={progression}
           onChallengeChange={handleChallengeChange}
         />
+
+        <BeginnerWorkspaceGuide selectedLab={selectedLab} enabled={beginnerMode} />
 
         <PrototypeNotice
           draftSaved={draftSaved}
@@ -602,6 +654,8 @@ export function LabWorkspaceExperience() {
           selectedLab={selectedLab}
           submissionId={currentSubmissionId}
         />
+
+        <InstantXpFeedback feedback={xpFeedback} />
 
         <div className="grid gap-7 xl:grid-cols-[360px_minmax(0,1fr)] xl:items-start 2xl:grid-cols-[380px_minmax(0,1fr)]">
           <ProblemBriefPanel
@@ -650,10 +704,12 @@ export function LabWorkspaceExperience() {
 function ChallengeSelector({
   selectedLab,
   labs,
+  progression,
   onChallengeChange,
 }: {
   selectedLab: Lab;
   labs: Lab[];
+  progression: ProgressionState | null;
   onChallengeChange: (labId: LabId) => void;
 }) {
   return (
@@ -681,8 +737,15 @@ function ChallengeSelector({
             className="w-full rounded-[1.1rem] border border-white/[0.1] bg-slate-950/[0.78] px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-cyan-300/[0.45] focus:ring-4 focus:ring-cyan-300/10"
           >
             {labs.map((lab) => (
-              <option key={lab.id} value={lab.id} className="bg-slate-950 text-slate-100">
-                {lab.title}
+              <option
+                key={lab.id}
+                value={lab.id}
+                disabled={progression ? !isLabUnlocked(lab, progression) : false}
+                className="bg-slate-950 text-slate-100"
+              >
+                {progression && !isLabUnlocked(lab, progression)
+                  ? `${lab.title} - locked`
+                  : lab.title}
               </option>
             ))}
           </select>
@@ -693,9 +756,131 @@ function ChallengeSelector({
         <ChallengeMetric label="Role fit" value={selectedLab.role.join(" / ")} />
         <ChallengeMetric label="Skill" value={selectedLab.skill} />
         <ChallengeMetric label="Difficulty" value={selectedLab.difficulty} />
+        <ChallengeMetric
+          label="Unlock status"
+          value={progression ? getLockedReason(selectedLab, progression) || "Unlocked" : "Unlocked"}
+        />
         <ChallengeMetric label="Expected output" value={selectedLab.expectedOutput} />
       </div>
     </section>
+  );
+}
+
+function BeginnerWorkspaceGuide({
+  selectedLab,
+  enabled,
+}: {
+  selectedLab: Lab;
+  enabled: boolean;
+}) {
+  const [openPanel, setOpenPanel] = useState<"hint" | "example" | "solution" | null>("hint");
+  const steps = [
+    "Read the task and say the goal in one sentence.",
+    "Look at the data fields and choose what seems useful.",
+    selectedLab.instructions[1] ?? "Do the main practice action.",
+    selectedLab.instructions[2] ?? "Write the clearest pattern you found.",
+    "Save your work and explain your answer in simple language.",
+  ];
+
+  const panels = {
+    hint:
+      selectedLab.instructions[0] ??
+      "Start by identifying the business question before touching the tool area.",
+    example:
+      "Example: I found that one customer group has lower revenue than before, so the team should inspect that group first.",
+    solution:
+      "A strong answer names the group or issue, points to one piece of evidence, and recommends one next action. You do not need a perfect answer on the first try.",
+  };
+
+  return (
+    <section className="rounded-[1.45rem] border border-cyan-300/[0.16] bg-[linear-gradient(180deg,rgba(34,211,238,0.095),rgba(255,255,255,0.028))] p-4 shadow-[0_18px_54px_rgba(2,8,20,0.25),inset_0_1px_0_rgba(255,255,255,0.06)]">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div>
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="text-[11px] uppercase tracking-[0.32em] text-cyan-100">
+              Beginner Mode
+            </p>
+            <BeginnerModeToggle compact />
+          </div>
+          <h2 className="mt-3 text-xl font-semibold tracking-[-0.03em] text-white">
+            {enabled ? "Guided task path: Step 1 to Step 5" : "Turn on Beginner Mode for guided steps"}
+          </h2>
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
+            {enabled
+              ? "Use this as your simple checklist. The workspace still stays premium, but the instructions stay beginner-friendly."
+              : "Beginner Mode adds hints, examples, and guided steps without changing your saved work."}
+          </p>
+        </div>
+      </div>
+
+      {enabled ? (
+        <>
+          <div className="mt-5 grid gap-3 lg:grid-cols-5">
+            {steps.map((step, index) => (
+              <div
+                key={`${step}-${index}`}
+                className="rounded-[1.1rem] border border-white/[0.08] bg-slate-950/[0.36] p-3"
+              >
+                <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-200/[0.72]">
+                  Step {index + 1}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-slate-200">{step}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-5 flex flex-wrap gap-3">
+            <GuideButton active={openPanel === "hint"} onClick={() => setOpenPanel("hint")}>
+              Show Hint
+            </GuideButton>
+            <GuideButton active={openPanel === "example"} onClick={() => setOpenPanel("example")}>
+              Show Example
+            </GuideButton>
+            <GuideButton active={openPanel === "solution"} onClick={() => setOpenPanel("solution")}>
+              Explain Solution
+            </GuideButton>
+          </div>
+
+          {openPanel ? (
+            <div className="mt-4 rounded-[1.15rem] border border-cyan-300/[0.14] bg-cyan-300/[0.06] px-4 py-3">
+              <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-200/[0.72]">
+                {openPanel === "hint"
+                  ? "Hint"
+                  : openPanel === "example"
+                    ? "Example"
+                    : "Solution Explanation"}
+              </p>
+              <p className="mt-2 text-sm leading-6 text-cyan-50">{panels[openPanel]}</p>
+            </div>
+          ) : null}
+        </>
+      ) : null}
+    </section>
+  );
+}
+
+function GuideButton({
+  active,
+  children,
+  onClick,
+}: {
+  active: boolean;
+  children: ReactNode;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={[
+        "rounded-full border px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.2em] transition",
+        active
+          ? "border-cyan-300/[0.55] bg-cyan-300 text-slate-950 shadow-[0_0_24px_rgba(103,232,249,0.18)]"
+          : "border-white/[0.12] bg-white/[0.04] text-slate-300 hover:border-cyan-300/30 hover:text-cyan-100",
+      ].join(" ")}
+    >
+      {children}
+    </button>
   );
 }
 
@@ -753,6 +938,50 @@ function PrototypeNotice({
               View Submission
             </a>
           ) : null}
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
+function InstantXpFeedback({ feedback }: { feedback: XpAward | null }) {
+  if (!feedback) {
+    return null;
+  }
+
+  return (
+    <section className="rounded-[1.45rem] border border-emerald-300/[0.18] bg-[linear-gradient(180deg,rgba(16,185,129,0.12),rgba(34,211,238,0.045))] px-4 py-4 shadow-[0_18px_54px_rgba(2,8,20,0.25),inset_0_1px_0_rgba(255,255,255,0.06)]">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p className="text-[11px] uppercase tracking-[0.32em] text-emerald-100">
+            XP Earned
+          </p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-white">
+            +{feedback.xp} XP added. Level: {feedback.level}
+          </h2>
+          <p className="mt-2 text-sm leading-6 text-slate-300">{feedback.reason}</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {feedback.unlockedLabs.length > 0 ? (
+            feedback.unlockedLabs.map((lab) => (
+              <StatusPill key={lab.id} label={`Unlocked: ${lab.title}`} tone="success" />
+            ))
+          ) : (
+            <StatusPill label="Momentum saved" tone="success" />
+          )}
+        </div>
+      </div>
+
+      {feedback.nextMission ? (
+        <div className="mt-4 rounded-[1.15rem] border border-white/[0.08] bg-slate-950/[0.34] px-4 py-3">
+          <p className="text-[10px] uppercase tracking-[0.24em] text-slate-500">Next mission</p>
+          <p className="mt-2 text-sm font-medium text-cyan-50">{feedback.nextMission.title}</p>
+          <a
+            href={`/lab?challenge=${feedback.nextMission.id}`}
+            className="mt-3 inline-flex rounded-full border border-cyan-300/[0.45] bg-cyan-300 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-950 transition hover:-translate-y-0.5 hover:bg-cyan-200"
+          >
+            Chase Next XP
+          </a>
         </div>
       ) : null}
     </section>

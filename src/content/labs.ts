@@ -14,7 +14,9 @@ export type LabDifficulty = "Beginner" | "Intermediate" | "Advanced";
 
 export type LabFormat =
   | "SQL Challenge"
+  | "Guided Practice"
   | "Diagnostic Simulation"
+  | "Dashboard Fix"
   | "Dashboard Critique"
   | "Excel Challenge"
   | "Requirements Case"
@@ -52,102 +54,102 @@ export interface Lab {
 export const labs: Lab[] = [
   {
     id: "sql-join-challenge",
-    title: "SQL Join Challenge",
+    title: "Combine Two Tables",
     role: ["Data Analyst", "Business Analyst"],
     skill: "SQL",
     difficulty: "Beginner",
     estimatedTime: "45-60 minutes",
     brief:
-      "Join customer, order, and refund signals to identify revenue leakage and explain which segment needs follow-up.",
+      "Combine simple customer and order tables to find where money is being lost.",
     datasetDescription:
-      "Customer orders, refund events, acquisition channels, customer segments, retained revenue, and account cohort attributes.",
+      "Customer orders, refunds, customer groups, and revenue fields.",
     expectedOutput:
-      "A working SQL query, result table, and concise business readout that names the highest-priority segment.",
+      "A working answer, a small results table, and three plain sentences about what to fix first.",
     instructions: [
-      "Identify the grain of each table or source view.",
-      "Join the relevant customer and revenue signals.",
-      "Aggregate leakage by segment or region.",
-      "Write a three-sentence stakeholder readout.",
+      "Read the question and identify the tables you need.",
+      "Connect the customer and revenue information.",
+      "Group the results by customer type or region.",
+      "Write three simple sentences explaining what you found.",
     ],
     starterPrompt:
-      "Find the segment with the strongest retained-revenue leakage and explain the business follow-up.",
+      "Find the customer group losing the most money and explain what the team should do next.",
     rubricId: "sql-analysis",
     description:
-      "Join customer, order, and refund signals to identify revenue leakage and explain which segment needs follow-up.",
+      "Combine simple customer and order tables to find where money is being lost.",
     format: "SQL Challenge",
     estimatedDuration: "45-60 minutes",
-    skills: ["SQL", "SQL joins", "Aggregation", "Revenue analysis", "Result interpretation"],
+    skills: ["SQL basics", "Combining tables", "Grouping results", "Explaining results"],
     trackFit: ["Data Analyst", "Business Analyst"],
     datasetContext:
-      "Customer orders, refund events, acquisition channels, customer segments, retained revenue, and account cohort attributes.",
-    deliverables: ["Working SQL query", "Result table", "Three-sentence business readout"],
-    portfolioOutput: "A concise SQL evidence card showing revenue leakage by customer segment.",
+      "Customer orders, refunds, customer groups, and revenue fields.",
+    deliverables: ["Working answer", "Result table", "Three-sentence explanation"],
+    portfolioOutput: "A simple proof card showing where revenue is dropping.",
   },
   {
     id: "churn-diagnostic-simulation",
-    title: "Churn Diagnostic Simulation",
+    title: "Find At-Risk Customers",
     role: ["Data Analyst", "Data Scientist"],
     skill: "SQL",
     difficulty: "Intermediate",
     estimatedTime: "70-90 minutes",
     brief:
-      "Diagnose where churn risk is concentrated and translate the evidence into an intervention recommendation.",
+      "Find which customers may leave and suggest one helpful action.",
     datasetDescription:
-      "Account cohorts with onboarding bands, segments, retained revenue, prior revenue, churn flags, and risk scores.",
+      "Customer groups, onboarding progress, revenue, and risk scores.",
     expectedOutput:
-      "A churn diagnosis, evidence table, key pattern summary, and recommended intervention.",
+      "A short risk summary, a small evidence table, and one suggested action.",
     instructions: [
-      "Slice churn risk by onboarding band, segment, and region.",
-      "Compare retained revenue against prior retained revenue.",
-      "Name the highest-risk pattern and the likely business cause.",
-      "Recommend one measurable intervention.",
+      "Compare risk by customer group and region.",
+      "Check where revenue has dropped.",
+      "Name the clearest risk pattern.",
+      "Suggest one action the team can measure.",
     ],
     starterPrompt:
-      "Where is churn risk most concentrated, and what action should the business take first?",
+      "Which customers are most likely to leave, and what should the team try first?",
     rubricId: "sql-analysis",
     description:
-      "Diagnose where churn risk is concentrated and translate the evidence into an intervention recommendation.",
-    format: "Diagnostic Simulation",
+      "Find which customers may leave and suggest one helpful action.",
+    format: "Guided Practice",
     estimatedDuration: "70-90 minutes",
-    skills: ["SQL", "Cohort analysis", "Churn diagnosis", "Business recommendation"],
+    skills: ["SQL basics", "Finding patterns", "Risk explanation", "Recommendation writing"],
     trackFit: ["Data Analyst", "Data Scientist"],
     datasetContext:
-      "Account cohorts with onboarding bands, segments, retained revenue, prior revenue, churn flags, and risk scores.",
-    deliverables: ["Diagnostic SQL", "Result table", "Key pattern summary", "Recommendation"],
-    portfolioOutput: "A churn diagnostic memo with evidence, interpretation, and action priority.",
+      "Customer groups, onboarding progress, revenue, and risk scores.",
+    deliverables: ["Working answer", "Result table", "Risk summary", "Recommendation"],
+    portfolioOutput: "A simple customer-risk note with evidence and next steps.",
   },
   {
     id: "sales-dashboard-critique",
-    title: "Dashboard Critique Lab",
+    title: "Fix a Confusing Dashboard",
     role: ["Data Analyst", "Business Analyst"],
     skill: "Power BI",
     difficulty: "Beginner",
     estimatedTime: "40-55 minutes",
     brief:
-      "Review a cluttered sales dashboard and turn it into a clearer executive decision surface.",
+      "Review a cluttered sales dashboard and make it easier to understand.",
     datasetDescription:
-      "A sales performance dashboard with pipeline, win rate, revenue, activity, stage movement, and territory metrics.",
+      "A sales dashboard with too many numbers, charts, and labels.",
     expectedOutput:
-      "A dashboard issue list, revised metric hierarchy, and stakeholder-ready improvement recommendation.",
+      "A list of confusing parts, a better order for the numbers, and one improvement plan.",
     instructions: [
-      "Identify the dashboard audience and primary decision.",
-      "Flag metrics that are unclear, redundant, or low-action.",
-      "Reorder metrics into an executive decision flow.",
-      "Recommend visual and narrative improvements.",
+      "Decide who will use the dashboard.",
+      "Mark what is confusing or repeated.",
+      "Put the most important numbers first.",
+      "Suggest clearer labels, charts, or notes.",
     ],
     starterPrompt:
-      "What should the sales leader see first, and which dashboard elements should move down or disappear?",
+      "What should the sales leader see first, and what should be removed or moved down?",
     rubricId: "dashboard-critique",
     description:
-      "Review a cluttered sales dashboard and turn it into a clearer executive decision surface.",
-    format: "Dashboard Critique",
+      "Review a cluttered sales dashboard and make it easier to understand.",
+    format: "Dashboard Fix",
     estimatedDuration: "40-55 minutes",
-    skills: ["Power BI", "Dashboard critique", "Metric hierarchy", "Stakeholder communication", "Executive framing"],
+    skills: ["Dashboard reading", "Choosing key numbers", "Clear writing", "Business communication"],
     trackFit: ["Data Analyst", "Business Analyst"],
     datasetContext:
-      "Mock sales dashboard with pipeline, win rate, revenue, activity, stage movement, and territory metrics.",
-    deliverables: ["Dashboard issue list", "Priority fixes", "Revised metric hierarchy"],
-    portfolioOutput: "A before-and-after dashboard critique memo for sales leadership.",
+      "Mock sales dashboard with revenue, activity, sales stage, and region metrics.",
+    deliverables: ["Issue list", "Priority fixes", "Better dashboard order"],
+    portfolioOutput: "A before-and-after dashboard improvement note.",
   },
   {
     id: "excel-cleaning-challenge",
@@ -184,36 +186,36 @@ export const labs: Lab[] = [
   },
   {
     id: "ba-requirements-case",
-    title: "BA Requirement Mapping Case",
+    title: "Turn a Request Into Clear Steps",
     role: ["Business Analyst"],
     skill: "Requirements",
     difficulty: "Intermediate",
     estimatedTime: "60-75 minutes",
     brief:
-      "Turn a vague stakeholder request into requirements, acceptance criteria, assumptions, and open questions.",
+      "Turn a vague business request into clear steps a team can build.",
     datasetDescription:
       "Stakeholder notes for a discount approval workflow with unclear roles, thresholds, exception reasons, and SLA ownership.",
     expectedOutput:
-      "A scoped requirement map with functional requirements, acceptance criteria, and unresolved decisions.",
+      "A simple requirement list, clear success checks, and open questions.",
     instructions: [
-      "Clarify the business goal and stakeholder groups.",
-      "Separate requirements from assumptions and open questions.",
-      "Write testable acceptance criteria.",
-      "Call out edge cases and scope boundaries.",
+      "Write the business goal in one sentence.",
+      "List what is known and what is unclear.",
+      "Write simple checks for success.",
+      "Name what is outside the first version.",
     ],
     starterPrompt:
-      "Map the stakeholder request into implementation-ready requirements without overbuilding the workflow.",
+      "Turn the request into simple build steps without adding extra work.",
     rubricId: "business-analysis",
     description:
-      "Turn a vague stakeholder request into requirements, acceptance criteria, assumptions, and open questions.",
+      "Turn a vague business request into clear steps a team can build.",
     format: "Requirements Case",
     estimatedDuration: "60-75 minutes",
-    skills: ["Requirements", "Requirements writing", "Acceptance criteria", "Stakeholder analysis", "Scope control"],
+    skills: ["Writing requirements", "Asking questions", "Success checks", "Keeping scope small"],
     trackFit: ["Business Analyst"],
     datasetContext:
       "Stakeholder notes for a discount approval workflow with unclear roles, thresholds, exception reasons, and SLA ownership.",
-    deliverables: ["Problem statement", "Functional requirements", "Acceptance criteria", "Open questions"],
-    portfolioOutput: "A polished requirements brief suitable for a business analyst portfolio.",
+    deliverables: ["Problem statement", "Requirement list", "Success checks", "Open questions"],
+    portfolioOutput: "A clear business request document for Your Proof page.",
   },
   {
     id: "user-story-builder",
@@ -250,68 +252,68 @@ export const labs: Lab[] = [
   },
   {
     id: "python-eda-notebook-task",
-    title: "Python EDA Notebook Task",
+    title: "Explore Data in a Notebook",
     role: ["Data Analyst", "Data Scientist"],
     skill: "Python",
     difficulty: "Intermediate",
     estimatedTime: "90-120 minutes",
     brief:
-      "Explore a messy customer activity dataset and identify patterns that could guide retention experiments.",
+      "Look through messy customer activity data and find useful patterns.",
     datasetDescription:
       "Customer product usage, plan type, support activity, onboarding completion, activity frequency, and retention status.",
     expectedOutput:
-      "A clean notebook with data quality notes, exploratory charts, findings, and experiment hypotheses.",
+      "A notebook with clean notes, a few charts, findings, and ideas to test.",
     instructions: [
-      "Inspect schema, missing values, and suspicious records.",
-      "Create useful behavioral cuts and summaries.",
-      "Visualize patterns tied to retention or placement outcomes.",
-      "Write insight notes and experiment ideas.",
+      "Check what columns exist and what is missing.",
+      "Create simple groups and summaries.",
+      "Make charts that reveal patterns.",
+      "Write notes and ideas to test later.",
     ],
     starterPrompt:
-      "Use Python to discover which behavioral signals deserve deeper investigation and explain why.",
+      "Use Python to find patterns worth checking further and explain why.",
     rubricId: "python-eda",
     description:
-      "Explore a messy customer activity dataset and identify patterns that could guide retention experiments.",
+      "Look through messy customer activity data and find useful patterns.",
     format: "Notebook Task",
     estimatedDuration: "90-120 minutes",
-    skills: ["Python", "Pandas", "EDA", "Visualization", "Insight synthesis"],
+    skills: ["Python basics", "Notebook work", "Charts", "Finding patterns"],
     trackFit: ["Data Analyst", "Data Scientist"],
     datasetContext:
       "Customer product usage, plan type, support activity, onboarding completion, activity frequency, and retention status.",
-    deliverables: ["Clean notebook", "Data quality notes", "Exploratory charts", "Insight summary"],
-    portfolioOutput: "A recruiter-readable EDA notebook with retention pattern findings.",
+    deliverables: ["Clean notebook", "Data notes", "Charts", "Pattern summary"],
+    portfolioOutput: "A beginner-friendly notebook showing patterns and explanations.",
   },
   {
     id: "debugging-broken-sql-query",
-    title: "Broken SQL Debugging Drill",
+    title: "Fix a Broken Query",
     role: ["Data Analyst", "Data Scientist"],
     skill: "SQL",
     difficulty: "Intermediate",
     estimatedTime: "45-70 minutes",
     brief:
-      "Repair a broken cohort query, explain the root cause, and validate that the fixed output answers the original question.",
+      "Fix a broken SQL query and explain what was wrong in plain language.",
     datasetDescription:
       "Subscription cohorts with signup dates, invoices, onboarding bands, churn flags, retained revenue, and risk scores.",
     expectedOutput:
-      "A fixed SQL query, bug explanation, validation note, and business summary.",
+      "A fixed answer, what changed, a quick check, and a short business summary.",
     instructions: [
-      "Identify why the query is failing or misleading.",
-      "Repair grouping, filters, joins, or calculations.",
-      "Validate that the output matches the business question.",
-      "Explain the fix in plain analyst language.",
+      "Find why the query is wrong.",
+      "Fix the filter, grouping, join, or calculation.",
+      "Check that the answer matches the question.",
+      "Explain the fix in simple words.",
     ],
     starterPrompt:
-      "Debug the cohort query and prove the corrected output can support a business decision.",
+      "Fix the query and show that the corrected answer can help a business decision.",
     rubricId: "sql-analysis",
     description:
-      "Repair a broken cohort query, explain the root cause, and validate that the fixed output answers the original question.",
+      "Fix a broken SQL query and explain what was wrong in plain language.",
     format: "Debugging Exercise",
     estimatedDuration: "45-70 minutes",
-    skills: ["SQL", "SQL debugging", "Cohort logic", "Validation", "Technical explanation"],
+    skills: ["SQL basics", "Fixing errors", "Checking answers", "Simple explanation"],
     trackFit: ["Data Analyst", "Data Scientist"],
     datasetContext:
       "Subscription cohorts with signup dates, invoices, onboarding bands, churn flags, retained revenue, and risk scores.",
-    deliverables: ["Fixed SQL query", "Bug explanation", "Validation notes", "Business summary"],
-    portfolioOutput: "A debugging case note showing SQL reasoning and validation discipline.",
+    deliverables: ["Fixed query", "What was wrong", "Check notes", "Business summary"],
+    portfolioOutput: "A simple proof note showing how you fixed a broken query.",
   },
 ];

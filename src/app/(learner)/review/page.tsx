@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { ReviewQueue } from "@/components/review/review-queue";
 
 export const metadata: Metadata = {
-  title: "Review Queue",
+  title: "Feedback",
   description:
-    "Peer and mentor review queue for AnalystOS submissions, rubric scoring, and feedback decisions.",
+    "Peer and mentor feedback for AnalystOS work, scoring, and next-step decisions.",
   robots: {
     index: false,
     follow: false,

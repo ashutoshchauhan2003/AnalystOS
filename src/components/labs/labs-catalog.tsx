@@ -1,10 +1,17 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { labs, type Lab, type LabDifficulty, type PathTrack } from "@/content/labs";
 import { cn } from "@/lib/utils";
+import {
+  getLockedReason,
+  isLabUnlocked,
+  labRewards,
+  readProgression,
+  type ProgressionState,
+} from "@/data/progression";
 
 type RoleFilter = "All" | PathTrack;
 type SkillFilter =
@@ -43,6 +50,11 @@ export function LabsCatalog() {
   const [skillFilter, setSkillFilter] = useState<SkillFilter>("All");
   const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>("All");
   const [searchTerm, setSearchTerm] = useState("");
+  const [progression, setProgression] = useState<ProgressionState | null>(null);
+
+  useEffect(() => {
+    setProgression(readProgression());
+  }, []);
 
   const filteredLabs = useMemo(
     () =>
@@ -75,13 +87,13 @@ export function LabsCatalog() {
       <div className="rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-5 shadow-[0_20px_70px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl lg:p-6">
         <label className="block">
           <span className="mb-3 block text-[11px] uppercase tracking-[0.3em] text-cyan-200/[0.72]">
-            Search by lab title
+            Search by task title
           </span>
           <input
             type="search"
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
-            placeholder="Search SQL, dashboard, requirements, EDA..."
+            placeholder="Search tables, dashboards, clear steps, notebooks..."
             className="w-full rounded-[1.15rem] border border-white/[0.1] bg-slate-950/[0.62] px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300/[0.42] focus:ring-4 focus:ring-cyan-300/[0.08]"
           />
         </label>
@@ -111,7 +123,7 @@ export function LabsCatalog() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-slate-400">
           Showing <span className="text-cyan-100">{filteredLabs.length}</span> of{" "}
-          <span className="text-cyan-100">{labs.length}</span> AnalystOS labs
+          <span className="text-cyan-100">{labs.length}</span> AnalystOS missions
         </p>
         <button
           type="button"
@@ -130,12 +142,12 @@ export function LabsCatalog() {
       {filteredLabs.length > 0 ? (
         <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
           {filteredLabs.map((lab, index) => (
-            <LabCard key={lab.id} lab={lab} index={index} />
+            <LabCard key={lab.id} lab={lab} index={index} progression={progression} />
           ))}
         </div>
       ) : (
         <div className="rounded-[28px] border border-white/10 bg-white/[0.035] p-8 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
-          <p className="text-xl font-medium text-white">No labs match this search.</p>
+          <p className="text-xl font-medium text-white">No practice tasks match this search.</p>
           <p className="mt-3 text-sm leading-6 text-slate-400">
             Try broadening the title search, role, skill, or difficulty filter.
           </p>
@@ -180,7 +192,18 @@ function FilterGroup<T extends string>({
   );
 }
 
-function LabCard({ lab, index }: { lab: Lab; index: number }) {
+function LabCard({
+  lab,
+  index,
+  progression,
+}: {
+  lab: Lab;
+  index: number;
+  progression: ProgressionState | null;
+}) {
+  const unlocked = progression ? isLabUnlocked(lab, progression) : true;
+  const lockedReason = progression ? getLockedReason(lab, progression) : "";
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 18, scale: 0.985 }}
@@ -198,8 +221,15 @@ function LabCard({ lab, index }: { lab: Lab; index: number }) {
           <p className="text-[11px] uppercase tracking-[0.3em] text-cyan-200/[0.72]">
             {lab.skill}
           </p>
-          <span className="rounded-full border border-cyan-300/[0.22] bg-cyan-300/10 px-3 py-1 text-[10px] uppercase tracking-[0.22em] text-cyan-100">
-            {lab.difficulty}
+          <span
+            className={cn(
+              "rounded-full border px-3 py-1 text-[10px] uppercase tracking-[0.22em]",
+              unlocked
+                ? "border-cyan-300/[0.22] bg-cyan-300/10 text-cyan-100"
+                : "border-amber-300/[0.2] bg-amber-300/[0.08] text-amber-100",
+            )}
+          >
+            {unlocked ? lab.difficulty : "Locked"}
           </span>
         </div>
 
@@ -220,23 +250,35 @@ function LabCard({ lab, index }: { lab: Lab; index: number }) {
         </div>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
-          <MiniMetric label="Estimated time" value={lab.estimatedTime} />
-          <MiniMetric label="Format" value={lab.format} />
+          <MiniMetric label="Mission time" value={lab.estimatedTime} />
+          <MiniMetric label="Reward" value={`+${labRewards[lab.id]} XP`} />
         </div>
 
         <div className="mt-6 rounded-[1.25rem] border border-white/[0.08] bg-slate-950/[0.36] p-4">
           <p className="text-[10px] uppercase tracking-[0.24em] text-cyan-200/[0.72]">
-            Expected output
+            Mission objective
           </p>
-          <p className="mt-3 text-sm leading-6 text-slate-300">{lab.expectedOutput}</p>
+          <p className="mt-3 text-sm leading-6 text-slate-300">
+            {unlocked ? lab.expectedOutput : lockedReason}
+          </p>
         </div>
 
-        <Link
-          href={`/labs/${lab.id}`}
-          className="mt-7 inline-flex items-center justify-center rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-950 shadow-[0_0_32px_rgba(103,232,249,0.22)] transition hover:-translate-y-0.5 hover:bg-cyan-200"
-        >
-          Start Lab
-        </Link>
+        {unlocked ? (
+          <Link
+            href={`/labs/${lab.id}`}
+            className="mt-7 inline-flex items-center justify-center rounded-full border border-cyan-300/[0.55] bg-cyan-300 px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-950 shadow-[0_0_32px_rgba(103,232,249,0.22)] transition hover:-translate-y-0.5 hover:bg-cyan-200"
+          >
+            Accept Mission
+          </Link>
+        ) : (
+          <button
+            type="button"
+            disabled
+            className="mt-7 inline-flex cursor-not-allowed items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.04] px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500"
+          >
+            Mission Locked
+          </button>
+        )}
       </div>
     </motion.article>
   );
